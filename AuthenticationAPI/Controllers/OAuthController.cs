@@ -25,11 +25,11 @@ namespace AuthenticationAPI.Controllers
         private static readonly string AUTHORIZATION_TYPE_OAUTH = "OAuth ";
         private static readonly string CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
         private static readonly string ERROR_AUTHORIZATION_NOT_FOUND = "Header Authorization not found.";
-        private static readonly string INFONVIT_AUTENTICATION_URL = "https://serviciosweb.infonavit.org.mx:8892/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
+        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://serviciosweb.infonavit.org.mx:8892/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
         //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
         //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.3.10:9443/AutenticaDev-web/api/autenticaService/login";
         
-        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/login";
+        private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/login";
 
         private readonly AuthenticationAPIContext context;
 
@@ -101,7 +101,7 @@ namespace AuthenticationAPI.Controllers
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;           
             var client = new RestClient(INFONVIT_AUTENTICATION_URL);
-            client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true; //Se agreaga esta linea
+            client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true; //Se agreaga esta linea para saltar el SSL
             Funciones.FuncionesUtiles.LogToFile(INFONVIT_AUTENTICATION_URL);
             int retry = 3;
             var textResponse = String.Empty;
@@ -109,7 +109,7 @@ namespace AuthenticationAPI.Controllers
             {
                 client.Timeout = -1;
                 var request = new RestRequest(Method.POST);
-                request.AddHeader("Accept","*/*"); //Se agreaga esta linea
+                request.AddHeader("Accept","*/*"); //Se agreaga esta linea para saltar el SSL
                 request.AlwaysMultipartFormData = true; 
                 Funciones.FuncionesUtiles.LogToFile("usuario: " + consumerKey);
                 Funciones.FuncionesUtiles.LogToFile("password: " + signature);
