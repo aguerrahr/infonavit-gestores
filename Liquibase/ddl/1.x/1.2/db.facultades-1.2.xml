@@ -1,0 +1,160 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet  author="eric.ordonez"  id="modifyColumn-1.2.0">  
+    <dropUniqueConstraint
+            constraintName="DF_Employees_Enrolled"  
+            tableName="Employees"  
+            uniqueColumns="Enrolled"/>  
+</changeSet>
+    <changeSet author="eric.ordonez" id="modifyColumn-1.2.1">
+        <modifyDataType 
+            tableName="Employees"
+            columnName="Enrolled"
+            newDataType="tinyint"
+            />
+        <rollback>
+            <modifyDataType 
+                tableName="Employees"
+                columnName="Enrolled"
+                newDataType="bit"
+            />
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="modifyColumn-1.2.2">
+        <addDefaultValue   
+            tableName="Employees"
+            columnName="Enrolled"
+            defaultValue="2"
+            />
+        <rollback>
+            <addDefaultValue 
+                tableName="Employees"
+                columnName="Enrolled"
+                defaultValueNumeric="0"
+            />
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.3">
+        <createTable tableName="Modules">
+            <column computed="false" name="ModuleId" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Modules"/>
+            </column>
+            <column computed="false" name="Module" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="RegisteredAt" type="datetime"/>
+            <column computed="false" name="Icon" type="varchar(50)"/>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Modules_CreatedAt" name="CreatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable  cascadeConstraints="true"
+                tableName="Modules"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.4">
+        <createTable tableName="Faculties">
+            <column computed="false" name="FacultyId" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Faculties"/>
+            </column>
+            <column computed="false" name="Faculty" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="RegisteredAt" type="datetime"/>
+            <column computed="false" name="Icon" type="varchar(50)"/>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Faculties_CreatedAt" name="CreatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable  cascadeConstraints="true"
+                tableName="Faculties"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.5">
+        <createTable tableName="Settings">
+            <column computed="false" name="SettingId" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Settings"/>
+            </column>
+            <column computed="false" name="Key" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Value" type="varchar(50)"/>
+            <column computed="false" name="Description" type="varchar(300)"/>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Settings_CreatedAt" name="CreatedAt" type="datetime"/>
+        </createTable>
+        <rollback>
+            <dropTable  cascadeConstraints="true"
+                tableName="Settings"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.6">
+        <createTable tableName="JobsModules">
+            <column computed="false" name="JobId" type="tinyint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JobsModules"/>
+            </column>
+            <column computed="false" name="ModuleId" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JobsModules"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_PK_JobsModules_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable  cascadeConstraints="true"
+                tableName="JobsModules"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.7">
+        <createTable tableName="JobsFaculties">
+            <column computed="false" name="JobId" type="tinyint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JobsFaculties"/>
+            </column>
+            <column computed="false" name="FacultyId" type="int">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JobsFaculties"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_PK_JobsFaculties_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <rollback>
+            <dropTable  cascadeConstraints="true"
+                tableName="JobsFaculties"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.8">
+        <addForeignKeyConstraint baseColumnNames="JobId" baseTableName="JobsModules" constraintName="FK_JobsModules_Jobs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="JobId" referencedTableName="Jobs" validate="true"/>
+        <rollback>
+            <dropForeignKeyConstraint
+                baseTableName="JobsModules"
+                constraintName="FK_JobsModules_Jobs"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.9">
+        <addForeignKeyConstraint baseColumnNames="ModuleId" baseTableName="JobsModules" constraintName="FK_JobsModules_Modules" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ModuleId" referencedTableName="Modules" validate="true"/>
+        <rollback>
+            <dropForeignKeyConstraint
+                baseTableName="JobsModules"
+                constraintName="FK_JobsModules_Modules"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.10">
+        <addForeignKeyConstraint baseColumnNames="JobId" baseTableName="JobsFaculties" constraintName="FK_JobsFaculties_Jobs" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="JobId" referencedTableName="Jobs" validate="true"/>
+        <rollback>
+            <dropForeignKeyConstraint
+                baseTableName="JobsFaculties"
+                constraintName="FK_JobsFaculties_Jobs"/>
+        </rollback>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.2.11">
+        <addForeignKeyConstraint baseColumnNames="FacultyId" baseTableName="JobsFaculties" constraintName="FK_JobsFaculties_Faculties" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="FacultyId" referencedTableName="Faculties" validate="true"/>
+        <rollback>
+            <dropForeignKeyConstraint
+                baseTableName="JobsFaculties"
+                constraintName="FK_JobsFaculties_Faculties"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>

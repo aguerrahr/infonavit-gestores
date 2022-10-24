@@ -1,0 +1,207 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="eric.ordonez" id="1.0-1">
+        <createTable tableName="Authentication">
+            <column computed="false" name="EmployeeId" type="varchar(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Authentication"/>
+            </column>
+            <column computed="false" name="In" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Attempts" type="tinyint">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Token" type="varchar(50)"/>
+            <column computed="false" name="TmpToken" type="varchar(50)"/>
+            <column computed="false" name="Ip" type="varchar(15)"/>
+            <column computed="false" name="AuthenticatedAt" type="datetime"/>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Authentication_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-2">
+        <createTable tableName="Employees">
+            <column computed="false" name="EmployeeId" type="varchar(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Employees"/>
+            </column>
+            <column computed="false" name="JobId" type="tinyint">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="In" type="varchar(15)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+                <column computed="false" name="MiddleName" type="varchar(50)">
+            <constraints nullable="false"/>
+            </column>
+             <column computed="false" name="LastName" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="PersonalNumber" type="varchar(18)">
+                <constraints nullable="true"/>
+            </column>
+            <column computed="false" name="PersonalNumber2" type="varchar(13)">
+                <constraints nullable="true"/>
+            </column>
+            <column computed="false" name="Ssn" type="varchar(11)">
+                <constraints nullable="true"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Employees_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-3">
+        <createTable tableName="JobHierarchy">
+            <column computed="false" name="JobId" type="tinyint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JobHierarchy"/>
+            </column>
+            <column computed="false" name="JobIdChild" type="tinyint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_JobHierarchy"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_JobHierarchy_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-4">
+        <createTable tableName="Jobs">
+            <column computed="false" name="JobId" type="tinyint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Jobs"/>
+            </column>
+            <column computed="false" name="Name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Description" type="varchar(50)"/>
+            <column computed="false" name="Group" type="varchar(30)"/>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Jobs_CreatedAt" name="CreatedAt" type="datetime"/>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-5">
+        <createTable tableName="Managers">
+            <column computed="false" name="ManagerId" type="varchar(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Managers"/>
+            </column>
+            <column computed="false" name="EmployeeId" type="varchar(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Managers"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Managers_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-6">
+        <createTable tableName="Resources">
+            <column computed="false" name="ResourceId" type="smallint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Resources"/>
+            </column>
+            <column computed="false" name="Path" type="varchar(150)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Resources_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-7">
+        <createTable tableName="Roles">
+            <column computed="false" name="RoleId" type="smallint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_Roles"/>
+            </column>
+            <column computed="false" name="Name" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="Description" type="varchar(50)"/>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_Roles_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-8">
+        <createTable tableName="RolesEmployee">
+            <column computed="false" name="EmployeeId" type="varchar(15)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RolesEmployee"/>
+            </column>
+            <column computed="false" name="RoleId" type="smallint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RolesEmployee"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_RolesEmployee_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-9">
+        <createTable tableName="RolesResources">
+            <column computed="false" name="ResourceId" type="smallint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RolesResources"/>
+            </column>
+            <column computed="false" name="RoleId" type="smallint">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_RolesResources"/>
+            </column>
+            <column computed="false" defaultValueComputed="sysdatetime()" defaultValueConstraintName="DF_RolesResources_CreatedAt" name="CreatedAt" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column computed="false" name="UpdatedAt" type="datetime"/>
+            <column computed="false" name="Enabled" type="bit">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-10">
+        <addForeignKeyConstraint baseColumnNames="EmployeeId" baseTableName="Managers" constraintName="FK_Managers_Employees_Employee" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="EmployeeId" referencedTableName="Employees" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-11">
+        <addForeignKeyConstraint baseColumnNames="ManagerId" baseTableName="Managers" constraintName="FK_Managers_Employees_Manager" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="EmployeeId" referencedTableName="Employees" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-12">
+        <addForeignKeyConstraint baseColumnNames="EmployeeId" baseTableName="RolesEmployee" constraintName="FK_Roles_Employee_Employees" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="EmployeeId" referencedTableName="Employees" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-13">
+        <addForeignKeyConstraint baseColumnNames="RoleId" baseTableName="RolesEmployee" constraintName="FK_Roles_Employee_Roles" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="RoleId" referencedTableName="Roles" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-14">
+        <addForeignKeyConstraint baseColumnNames="ResourceId" baseTableName="RolesResources" constraintName="FK_Roles_Resources_Resources" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="ResourceId" referencedTableName="Resources" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-15">
+        <addForeignKeyConstraint baseColumnNames="RoleId" baseTableName="RolesResources" constraintName="FK_Roles_Resources_Roles" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="RoleId" referencedTableName="Roles" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-16">
+        <addForeignKeyConstraint baseColumnNames="EmployeeId" baseTableName="Authentication" constraintName="FK_Authentication_Employee" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="EmployeeId" referencedTableName="Employees" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-17">
+        <addForeignKeyConstraint baseColumnNames="JobId" baseTableName="Employees" constraintName="FK_Job_Employees" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="JobId" referencedTableName="Jobs" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-18">
+        <addForeignKeyConstraint baseColumnNames="JobIdChild" baseTableName="JobHierarchy" constraintName="FK_Job_Hierarchy_Jobs_Employee" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="JobId" referencedTableName="Jobs" validate="true"/>
+    </changeSet>
+    <changeSet author="eric.ordonez" id="1.0-19">
+        <addForeignKeyConstraint baseColumnNames="JobId" baseTableName="JobHierarchy" constraintName="FK_Job_Hierarchy_Jobs_Manager" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="JobId" referencedTableName="Jobs" validate="true"/>
+    </changeSet>
+</databaseChangeLog>
