@@ -12,6 +12,7 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 using GestoresAPI.Filters;
 using System;
 
+
 namespace GestoresAPI
 {
     public class Startup
@@ -20,12 +21,12 @@ namespace GestoresAPI
         //private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
         //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:32980/";
         //private static readonly string AUTHORIZATION_DOMAIN = "http://10.90.8.113:14349/authmanager/";
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:14349/authmanager/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://labinfo:14349/authmanager/";
         //private static readonly string AUTHORIZATION_DOMAIN = "http://10.85.3.33:14349/authmanager/";
         //private static readonly string AUTHORIZATION_DOMAIN = "http://10.85.3.33:14349/authmanager/";
-        private static readonly string AUTHORIZATION_DOMAIN = "http://079301AQ45:14349/authmanager/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://079301AQ45:14349/authmanager/";
         private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
-       
+        private string _generalThings;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -37,8 +38,11 @@ namespace GestoresAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            _generalThings = Configuration["CON_ENVIRONMENT"];
+            //services.AddDbContext<GestoresAPIContext>(opt =>
+            //                                   opt.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
             services.AddDbContext<GestoresAPIContext>(opt =>
-                                               opt.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+                                               opt.UseSqlServer(_generalThings));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestoresAPI", Version = "v1" });
@@ -65,9 +69,9 @@ namespace GestoresAPI
                 .SetIsOriginAllowed((host) => true)                                     
                 .AllowCredentials()
                 .WithExposedHeaders("Authorization")
-            );
-            
-            app.UseOAuthEndpoint(AUTHORIZATION_DOMAIN, AUTHORIZATION_BASE_API, new String[] { "api/Settings" });
+            );                        
+            string AUTHORIZATION_DOMAIN = this.Configuration.GetConnectionString("AUTHORIZATION_DOMAIN");
+            app.UseOAuthEndpoint(AUTHORIZATION_DOMAIN, AUTHORIZATION_BASE_API, new String[] { "api/Settings" });            
             //app.UseOAuthEndpoint(AUTHORIZATION_DOMAIN, AUTHORIZATION_BASE_API, new String[] { "api/SignPayload" });
 
             app.UseRouting();

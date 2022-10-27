@@ -6,6 +6,7 @@ using AuthenticationAPI.Models.Contexts;
 using AuthenticationAPI.Models;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.Extensions.Configuration;
 
 namespace AuthenticationAPI.Controllers
 {
@@ -16,8 +17,8 @@ namespace AuthenticationAPI.Controllers
         private readonly int MAX_MINUTES_TO_EXPIRE = 15;
         private readonly ILogger<AuthenticationController> _logger;
         
-        public AuthenticationController(AuthenticationAPIContext context, ILogger<AuthenticationController> logger) 
-            : base(context)
+        public AuthenticationController(AuthenticationAPIContext context, ILogger<AuthenticationController> logger, IConfiguration configuration) 
+            : base(context, configuration)
         {
             _logger = logger;
         }

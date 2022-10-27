@@ -13,6 +13,7 @@ namespace AuthenticationAPI
 {
     public class Startup
     {
+        private string _generalThings;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,10 +24,14 @@ namespace AuthenticationAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+            _generalThings = Configuration["CON_ENVIRONMENT"];            
             //services.AddSingleton<SomeClass>();
-            services.AddControllers();
+            services.AddControllers();            
             services.AddDbContext<AuthenticationAPIContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("ConnectionDBGestores")));
+                opt.UseSqlServer(_generalThings));
+			//services.AddDbContext<AuthenticationAPIContext>(opt =>
+   //             opt.UseSqlServer(Configuration.GetConnectionString("ConnectionDBGestores")));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationAPI", Version = "v1" });
@@ -42,13 +47,14 @@ namespace AuthenticationAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "AuthenticationAPI v1"));
             }
-
+            //app.UseHttpsRedirection();
             app.UseRouting();
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
+            });            
         }
     }
 }

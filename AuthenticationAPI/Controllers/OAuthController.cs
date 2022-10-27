@@ -16,6 +16,9 @@ using Newtonsoft.Json.Linq;
 using System.Net.Security;
 using System.Security.Cryptography.X509Certificates;
 using RestSharp.Validation;
+//using Castle.Core.Configuration;
+using Microsoft.Extensions.Configuration;
+//using IConfiguration = Castle.Core.Configuration.IConfiguration;
 
 namespace AuthenticationAPI.Controllers
 {
@@ -27,17 +30,25 @@ namespace AuthenticationAPI.Controllers
         private static readonly string ERROR_AUTHORIZATION_NOT_FOUND = "Header Authorization not found.";
         //private static readonly string INFONVIT_AUTENTICATION_URL = "https://serviciosweb.infonavit.org.mx:8892/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
         //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
-        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.3.10:9443/AutenticaDev-web/api/autenticaService/login";
-        
-        private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/login";
+        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.3.10:9443/AutenticaDev-web/api/autenticaService/login";        
+        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/login";
 
         private readonly AuthenticationAPIContext context;
 
-        public OAuthController(AuthenticationAPIContext context)
+        private IConfiguration Configuration { get; }
+
+        //public OAuthController(IConfiguration configuration)
+        //{
+
+        //    Configuration = configuration;
+        //}
+
+        public OAuthController(AuthenticationAPIContext context, IConfiguration configuration)
         {
             this.context = context;
+            Configuration = configuration;
         }
-
+        
         protected IActionResult execute(Func<AuthenticationAPIContext, OAuthDTO, Employee, string> action) {
             string authHeader = Request.Headers[AUTHORIZATION_HEADER];
             if (null == authHeader || !authHeader.StartsWith(AUTHORIZATION_TYPE_OAUTH, StringComparison.OrdinalIgnoreCase))
@@ -99,10 +110,12 @@ namespace AuthenticationAPI.Controllers
 
     protected String signatureIsCorrect(string consumerKey, string signature, string group) {
             //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => { return true; };
-            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;           
+            //ServicePointManager.ServerCertificateValidationCallback += (sender, cert, chain, sslPolicyErrors) => true;
+            //var client = new RestClient(this.Configuration.GetConnectionString("URL_AUTH"));
+            string INFONVIT_AUTENTICATION_URL = this.Configuration.GetConnectionString("URL_AUTH");
             var client = new RestClient(INFONVIT_AUTENTICATION_URL);
-            client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true; //Se agreaga esta linea para saltar el SSL
-            Funciones.FuncionesUtiles.LogToFile(INFONVIT_AUTENTICATION_URL);
+            client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true; //Se agreaga esta linea para saltar el SSL            
+            Funciones.FuncionesUtiles.LogToFile("INFONVIT_AUTENTICATION_URL = " + INFONVIT_AUTENTICATION_URL);
             int retry = 3;
             var textResponse = String.Empty;
             do
@@ -119,8 +132,8 @@ namespace AuthenticationAPI.Controllers
                 request.AddParameter("grupo", group);                
                 //ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 IRestResponse response = client.Execute(request);
-                Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"": response.ErrorException.ToString()));
-                Funciones.FuncionesUtiles.LogToFile((response.ErrorMessage == null?"": response.ErrorMessage));
+                Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"---": response.ErrorException.ToString()));
+                Funciones.FuncionesUtiles.LogToFile((response.ErrorMessage == null?"---": response.ErrorMessage));
                 textResponse = response.Content;
                 Funciones.FuncionesUtiles.LogToFile(textResponse);
                 if (textResponse.Equals("Usuario inexistente")) 
