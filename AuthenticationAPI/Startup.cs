@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,11 +9,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using AuthenticationAPI.Models.Contexts;
 using System.Net.Http;
+using System;
 
 namespace AuthenticationAPI
 {
     public class Startup
-    {
+    {        
         private string _generalThings;
         public Startup(IConfiguration configuration)
         {
@@ -23,13 +25,24 @@ namespace AuthenticationAPI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
+            _generalThings =  Configuration["CON_ENVIRONMENT"];
             
-            _generalThings = Configuration["CON_ENVIRONMENT"];            
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddDataProtection();
+            var servicios = serviceCollection.BuildServiceProvider();
+
+            // get an IDataProtector from the IServiceProvider
+            var _protector = servicios.GetDataProtector("GestoresAPI");
+
+            //string protectedPayload = protector.Protect(_generalThings);
+
+            string unprotectedPayload = _protector.Unprotect(_generalThings);
+            
             //services.AddSingleton<SomeClass>();
             services.AddControllers();            
             services.AddDbContext<AuthenticationAPIContext>(opt =>
-                opt.UseSqlServer(_generalThings));
+                opt.UseSqlServer(unprotectedPayload));
 			//services.AddDbContext<AuthenticationAPIContext>(opt =>
    //             opt.UseSqlServer(Configuration.GetConnectionString("ConnectionDBGestores")));
             services.AddSwaggerGen(c =>

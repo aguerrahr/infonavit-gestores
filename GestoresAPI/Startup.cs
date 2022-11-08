@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -39,10 +40,22 @@ namespace GestoresAPI
         {
             services.AddControllers();
             _generalThings = Configuration["CON_ENVIRONMENT"];
+
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddDataProtection();
+            var servicios = serviceCollection.BuildServiceProvider();
+
+            // get an IDataProtector from the IServiceProvider
+            var _protector = servicios.GetDataProtector("GestoresAPI");
+
+            //string protectedPayload = protector.Protect(_generalThings);
+
+            string unprotectedPayload = _protector.Unprotect(_generalThings);
+
             //services.AddDbContext<GestoresAPIContext>(opt =>
             //                                   opt.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
             services.AddDbContext<GestoresAPIContext>(opt =>
-                                               opt.UseSqlServer(_generalThings));
+                                               opt.UseSqlServer(unprotectedPayload));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestoresAPI", Version = "v1" });
