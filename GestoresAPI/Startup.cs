@@ -48,7 +48,7 @@ namespace GestoresAPI
             // get an IDataProtector from the IServiceProvider
             var _protector = servicios.GetDataProtector("GestoresAPI");
 
-            //string protectedPayload = protector.Protect(_generalThings);
+            //string _protectedPayload = protector.Protect(_generalThings);
 
             string unprotectedPayload = _protector.Unprotect(_generalThings);
 
