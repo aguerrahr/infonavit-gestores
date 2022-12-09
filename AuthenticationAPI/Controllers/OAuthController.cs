@@ -115,7 +115,7 @@ namespace AuthenticationAPI.Controllers
             string INFONVIT_AUTENTICATION_URL = this.Configuration.GetConnectionString("URL_AUTH");
             var client = new RestClient(INFONVIT_AUTENTICATION_URL);
             client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true; //Se agreaga esta linea para saltar el SSL            
-            Funciones.FuncionesUtiles.LogToFile("INFONVIT_AUTENTICATION_URL = " + INFONVIT_AUTENTICATION_URL);
+            //Funciones.FuncionesUtiles.LogToFile("INFONVIT_AUTENTICATION_URL = " + INFONVIT_AUTENTICATION_URL);
             int retry = 3;
             var textResponse = String.Empty;
             do
@@ -124,18 +124,18 @@ namespace AuthenticationAPI.Controllers
                 var request = new RestRequest(Method.POST);
                 request.AddHeader("Accept","*/*"); //Se agreaga esta linea para saltar el SSL
                 request.AlwaysMultipartFormData = true; 
-                Funciones.FuncionesUtiles.LogToFile("usuario: " + consumerKey);
-                Funciones.FuncionesUtiles.LogToFile("password: " + signature);
-                Funciones.FuncionesUtiles.LogToFile("grupo: " + group);
+                //Funciones.FuncionesUtiles.LogToFile("usuario: " + consumerKey);
+                //Funciones.FuncionesUtiles.LogToFile("password: " + signature);
+                //Funciones.FuncionesUtiles.LogToFile("grupo: " + group);
                 request.AddParameter("usuario", consumerKey);
                 request.AddParameter("password", signature);
-                request.AddParameter("grupo", group);                
+                //request.AddParameter("grupo", group);                
                 //ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 IRestResponse response = client.Execute(request);
-                Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"---": response.ErrorException.ToString()));
-                Funciones.FuncionesUtiles.LogToFile((response.ErrorMessage == null?"---": response.ErrorMessage));
+                //Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"---": response.ErrorException.ToString()));
+                //Funciones.FuncionesUtiles.LogToFile((response.ErrorMessage == null?"---": response.ErrorMessage));
                 textResponse = response.Content;
-                Funciones.FuncionesUtiles.LogToFile(textResponse);
+                //Funciones.FuncionesUtiles.LogToFile(textResponse);
                 if (textResponse.Equals("Usuario inexistente")) 
                 {
                     retry = 1;
