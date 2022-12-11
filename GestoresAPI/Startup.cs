@@ -49,7 +49,7 @@ namespace GestoresAPI
             var _protector = servicios.GetDataProtector("GestoresAPI");
 
             //string _protectedPayload = protector.Protect(_generalThings);
-
+            //Traducción variable conexión
             string unprotectedPayload = _protector.Unprotect(_generalThings);
 
             //services.AddDbContext<GestoresAPIContext>(opt =>
