@@ -16,6 +16,8 @@ namespace GestoresAPI.Models.Contexts
         public DbSet<Modules> Modules { get; set; }
         public DbSet<Faculties> Faculties { get; set; }
         public DbSet<Settings> Settings { get; set; }
+        public DbSet<DerechoHabiente> DerechoHabientes { get; set; }
+        public DbSet<TipoDerechoHabiente> TipoDerechoHabientes { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseLazyLoadingProxies();
@@ -103,6 +105,17 @@ namespace GestoresAPI.Models.Contexts
                {
                    entity.Property(p => p.Icon).IsRequired(required: false);
                    entity.Property(p => p.RegisteredAt).IsRequired(required: false);
+               });
+            modelBuilder
+             .Entity<DerechoHabiente>()
+                .HasOne<TipoDerechoHabiente>(e => e.TipoDerechoHabientes)
+                    .WithMany(j => j.DerechoHabientes)
+                .HasForeignKey(e => e.TipoDerechoHabiente);
+            modelBuilder
+               .Entity<DerechoHabiente>(entity =>
+               {
+                   entity.Property(p => p.FhModificacion).IsRequired(required: false);
+                   entity.Property(p => p.UsuarioModifica).IsRequired(required: false);
                });
         }
     }

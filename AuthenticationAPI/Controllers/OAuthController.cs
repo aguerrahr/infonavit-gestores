@@ -129,7 +129,7 @@ namespace AuthenticationAPI.Controllers
                 //Funciones.FuncionesUtiles.LogToFile("grupo: " + group);
                 request.AddParameter("usuario", consumerKey);
                 request.AddParameter("password", signature);
-                //request.AddParameter("grupo", group);                
+                request.AddParameter("grupo", group);                
                 //ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 IRestResponse response = client.Execute(request);
                 //Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"---": response.ErrorException.ToString()));

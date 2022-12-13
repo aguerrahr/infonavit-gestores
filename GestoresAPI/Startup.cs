@@ -18,14 +18,8 @@ namespace GestoresAPI
 {
     public class Startup
     {
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:5000/";        
-        //private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:32980/";
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://10.90.8.113:14349/authmanager/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:32980/";        
         //private static readonly string AUTHORIZATION_DOMAIN = "http://labinfo:14349/authmanager/";
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://10.85.3.33:14349/authmanager/";
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://10.85.3.33:14349/authmanager/";
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://079301AQ45:14349/authmanager/";
         private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
         private string _generalThings;
         public Startup(IConfiguration configuration)
@@ -48,7 +42,9 @@ namespace GestoresAPI
             // get an IDataProtector from the IServiceProvider
             var _protector = servicios.GetDataProtector("GestoresAPI");
 
-            //string _protectedPayload = protector.Protect(_generalThings);
+            //_generalThings = @"Data Source=DESARROLLO11;Initial Catalog=Infonavit-Managers;Integrated Security=True";
+            //string _protectedPayload = _protector.Protect(_generalThings);
+
             //Traducción variable conexión
             string unprotectedPayload = _protector.Unprotect(_generalThings);
 
