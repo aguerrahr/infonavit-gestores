@@ -140,6 +140,7 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.RFC = employeeRequest.RFC;
                 verifyEmployee.NSS = employeeRequest.NSS;
                 verifyEmployee.Enabled = true;
+                verifyEmployee.IdJob = employeeRequest.IdJob;
                 verifyEmployee.CreatedAt = DateTime.Now;
                 this.context.SaveChanges();
                 return new CreatedResult(
@@ -149,7 +150,7 @@ namespace GestoresAPI.Controllers
             else
             {
                 //var job = this.context.Jobs.FirstOrDefault(f => f.Name.Equals(JobNamesEnum.GERENTE.ToString()));
-                //var rolle = this.context.Roles.FirstOrDefault(a => a.Name.Contains(JobNamesEnum.GERENTE.ToString()));
+                var rolle = this.context.Roles.FirstOrDefault(a => a.ID == employeeRequest.IdJob);
                 /*
                 if (job == null)
                 {
@@ -176,7 +177,7 @@ namespace GestoresAPI.Controllers
                     //IdJob = job.ID,
                     IdJob = employeeRequest.IdJob,
                     CreatedAt = DateTime.Now,
-                    //Roles = new List<Role>() { rolle }
+                    Roles = new List<Role>() { rolle }
                 };
                 this.context.Employees.Add(employee);
                 this.context.SaveChanges();

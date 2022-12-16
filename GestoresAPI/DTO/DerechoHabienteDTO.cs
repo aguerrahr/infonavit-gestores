@@ -32,6 +32,8 @@ namespace GestoresAPI.DTO
         public int? Activo { get; set; }
         public int TipoDerechoHabiente { get; set; }
         public String NbTpDH { get; set; }
+        public String NbUsuairoEnrola { get; set; }
+        public String NbUsuairoModifica { get; set; }
     }    
 }
 
