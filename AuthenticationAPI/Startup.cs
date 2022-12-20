@@ -35,6 +35,9 @@ namespace AuthenticationAPI
             // get an IDataProtector from the IServiceProvider
             var _protector = servicios.GetDataProtector("GestoresAPI");
 
+            //_generalThings = "Data Source=LABINFO;Initial Catalog=Infonavit-Managers;Persist Security Info=True;User ID=sa;Password=31o5PhereAuth;";
+
+
             //string protectedPayload = _protector.Protect(_generalThings);
 
             string unprotectedPayload = _protector.Unprotect(_generalThings);
