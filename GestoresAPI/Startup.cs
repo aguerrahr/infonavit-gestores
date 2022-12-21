@@ -39,9 +39,8 @@ namespace GestoresAPI
         {
             services.AddControllers();
             _generalThings = Configuration["CON_ENVIRONMENT"];
-            string _unprotected = Funciones.FuncionesUtiles.Decrypt(_generalThings);
             services.AddDbContext<GestoresAPIContext>(opt =>
-                                               opt.UseSqlServer(_unprotected));
+                                               opt.UseSqlServer(_generalThings));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestoresAPI", Version = "v1" });

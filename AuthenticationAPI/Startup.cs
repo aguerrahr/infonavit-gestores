@@ -27,12 +27,8 @@ namespace AuthenticationAPI
         {                        
             services.AddControllers();
             _generalThings = Configuration["CON_ENVIRONMENT"];
-
-            //string _protected = Funciones.FuncionesUtiles.Encrypt("Data Source=LABINFO;Initial Catalog=Infonavit-Managers;Persist Security Info=True;User ID=sa;Password=31o5PhereAuth;");
-            string _unprotected = Funciones.FuncionesUtiles.Decrypt(_generalThings);
-
             services.AddDbContext<AuthenticationAPIContext>(opt =>
-                opt.UseSqlServer(_unprotected));
+                opt.UseSqlServer(_generalThings));
 	        services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationAPI", Version = "v1" });
