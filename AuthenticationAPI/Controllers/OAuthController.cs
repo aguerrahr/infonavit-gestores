@@ -28,11 +28,7 @@ namespace AuthenticationAPI.Controllers
         private static readonly string AUTHORIZATION_TYPE_OAUTH = "OAuth ";
         private static readonly string CONTENT_TYPE_FORM = "application/x-www-form-urlencoded";
         private static readonly string ERROR_AUTHORIZATION_NOT_FOUND = "Header Authorization not found.";
-        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://serviciosweb.infonavit.org.mx:8892/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
-        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/autenticarUsuarioGrupo";
-        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.3.10:9443/AutenticaDev-web/api/autenticaService/login";        
-        //private static readonly string INFONVIT_AUTENTICATION_URL = "https://10.85.6.28:9443/AutenticaQa-web/api/autenticaService/login";
-
+        
         private readonly AuthenticationAPIContext context;
 
         private IConfiguration Configuration { get; }
@@ -115,7 +111,7 @@ namespace AuthenticationAPI.Controllers
             string INFONVIT_AUTENTICATION_URL = this.Configuration.GetConnectionString("URL_AUTH");
             var client = new RestClient(INFONVIT_AUTENTICATION_URL);
             client.RemoteCertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true; //Se agreaga esta linea para saltar el SSL            
-            Funciones.FuncionesUtiles.LogToFile("INFONVIT_AUTENTICATION_URL = " + INFONVIT_AUTENTICATION_URL);
+            //Funciones.FuncionesUtiles.LogToFile("INFONVIT_AUTENTICATION_URL = " + INFONVIT_AUTENTICATION_URL);
             int retry = 3;
             var textResponse = String.Empty;
             do
@@ -124,18 +120,18 @@ namespace AuthenticationAPI.Controllers
                 var request = new RestRequest(Method.POST);
                 request.AddHeader("Accept","*/*"); //Se agreaga esta linea para saltar el SSL
                 request.AlwaysMultipartFormData = true; 
-                Funciones.FuncionesUtiles.LogToFile("usuario: " + consumerKey);
-                Funciones.FuncionesUtiles.LogToFile("password: " + signature);
-                Funciones.FuncionesUtiles.LogToFile("grupo: " + group);
+                //Funciones.FuncionesUtiles.LogToFile("usuario: " + consumerKey);
+                //Funciones.FuncionesUtiles.LogToFile("password: " + signature);
+                //Funciones.FuncionesUtiles.LogToFile("grupo: " + group);
                 request.AddParameter("usuario", consumerKey);
                 request.AddParameter("password", signature);
                 request.AddParameter("grupo", group);                
                 //ServicePointManager.ServerCertificateValidationCallback = new System.Net.Security.RemoteCertificateValidationCallback(RemoteServerCertificateValidationCallback);
                 IRestResponse response = client.Execute(request);
-                Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"---": response.ErrorException.ToString()));
-                Funciones.FuncionesUtiles.LogToFile((response.ErrorMessage == null?"---": response.ErrorMessage));
+                //Funciones.FuncionesUtiles.LogToFile((response.ErrorException == null?"---": response.ErrorException.ToString()));
+                //Funciones.FuncionesUtiles.LogToFile((response.ErrorMessage == null?"---": response.ErrorMessage));
                 textResponse = response.Content;
-                Funciones.FuncionesUtiles.LogToFile(textResponse);
+                //Funciones.FuncionesUtiles.LogToFile(textResponse);
                 if (textResponse.Equals("Usuario inexistente")) 
                 {
                     retry = 1;

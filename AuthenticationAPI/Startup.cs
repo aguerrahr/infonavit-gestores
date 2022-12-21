@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -25,30 +24,16 @@ namespace AuthenticationAPI
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
-            _generalThings =  Configuration["CON_ENVIRONMENT"];
-            
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDataProtection();
-            var servicios = serviceCollection.BuildServiceProvider();
+        {                        
+            services.AddControllers();
+            _generalThings = Configuration["CON_ENVIRONMENT"];
 
-            // get an IDataProtector from the IServiceProvider
-            var _protector = servicios.GetDataProtector("GestoresAPI");
+            //string _protected = Funciones.FuncionesUtiles.Encrypt("Data Source=LABINFO;Initial Catalog=Infonavit-Managers;Persist Security Info=True;User ID=sa;Password=31o5PhereAuth;");
+            string _unprotected = Funciones.FuncionesUtiles.Decrypt(_generalThings);
 
-            //_generalThings = "Data Source=LABINFO;Initial Catalog=Infonavit-Managers;Persist Security Info=True;User ID=sa;Password=31o5PhereAuth;";
-
-
-            //string protectedPayload = _protector.Protect(_generalThings);
-
-            string unprotectedPayload = _protector.Unprotect(_generalThings);
-            
-            //services.AddSingleton<SomeClass>();
-            services.AddControllers();            
             services.AddDbContext<AuthenticationAPIContext>(opt =>
-                opt.UseSqlServer(unprotectedPayload));
-			//services.AddDbContext<AuthenticationAPIContext>(opt =>
-   //             opt.UseSqlServer(Configuration.GetConnectionString("ConnectionDBGestores")));
-            services.AddSwaggerGen(c =>
+                opt.UseSqlServer(_unprotected));
+	        services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "AuthenticationAPI", Version = "v1" });
             });           

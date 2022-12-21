@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +17,14 @@ namespace GestoresAPI
 {
     public class Startup
     {
-        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:32980/";        
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:5000/";        
+        //private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://localhost:32980/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://10.90.8.113:14349/authmanager/";
         //private static readonly string AUTHORIZATION_DOMAIN = "http://labinfo:14349/authmanager/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://10.85.3.33:14349/authmanager/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://10.85.3.33:14349/authmanager/";
+        //private static readonly string AUTHORIZATION_DOMAIN = "http://079301AQ45:14349/authmanager/";
         private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
         private string _generalThings;
         public Startup(IConfiguration configuration)
@@ -34,24 +39,9 @@ namespace GestoresAPI
         {
             services.AddControllers();
             _generalThings = Configuration["CON_ENVIRONMENT"];
-
-            var serviceCollection = new ServiceCollection();
-            serviceCollection.AddDataProtection();
-            var servicios = serviceCollection.BuildServiceProvider();
-
-            // get an IDataProtector from the IServiceProvider
-            var _protector = servicios.GetDataProtector("GestoresAPI");
-
-            //_generalThings = @"Data Source=DESARROLLO11;Initial Catalog=Infonavit-Managers;Integrated Security=True";
-            //string _protectedPayload = _protector.Protect(_generalThings);
-
-            //Traducción variable conexión
-            string unprotectedPayload = _protector.Unprotect(_generalThings);
-
-            //services.AddDbContext<GestoresAPIContext>(opt =>
-            //                                   opt.UseSqlServer(Configuration.GetConnectionString("SqlConnection")));
+            string _unprotected = Funciones.FuncionesUtiles.Decrypt(_generalThings);
             services.AddDbContext<GestoresAPIContext>(opt =>
-                                               opt.UseSqlServer(unprotectedPayload));
+                                               opt.UseSqlServer(_unprotected));
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestoresAPI", Version = "v1" });
