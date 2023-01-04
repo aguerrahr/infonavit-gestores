@@ -85,7 +85,7 @@ namespace GestoresAPI.Controllers
                     NbUsuairoEnrola = ( 
                         from u in context.Employees 
                         where(u.IN == dh.UsuarioEnrola)
-                        select (u.Name + " " + u.MiddleName + " " + u.LastName)
+                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
                     ).FirstOrDefault().ToString(),
                     NbUsuairoModifica =
                     dh.UsuarioModifica == null
@@ -93,7 +93,7 @@ namespace GestoresAPI.Controllers
                     :   (
                             from u in context.Employees
                             where (u.IN == dh.UsuarioModifica)
-                            select (u.Name + " " + u.MiddleName + " " + u.LastName)
+                            select (u.Name + " " + u.LastName+ " " + u.MiddleName)
                         ).FirstOrDefault().ToString(),
                 }
 
