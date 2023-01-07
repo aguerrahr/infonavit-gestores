@@ -16,7 +16,7 @@ namespace AuthenticationAPI.Models
         [Column("Enabled")]
         public bool Enabled { get; set; }
         [Column("JobId")]
-        public Byte IdJob { get; set; }
+        public Byte IdJob { get; set; }        
         public virtual Job Job { get; set; }
         public virtual ICollection<Role> Roles { get; set; }
         public virtual Authentication Authentication { get; set; }

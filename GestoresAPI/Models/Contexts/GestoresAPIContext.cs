@@ -18,7 +18,7 @@ namespace GestoresAPI.Models.Contexts
         public DbSet<Settings> Settings { get; set; }
         public DbSet<DerechoHabiente> DerechoHabientes { get; set; }
         public DbSet<TipoDerechoHabiente> TipoDerechoHabientes { get; set; }
-
+        public DbSet<EmployeesHistory> EmployeesHistories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseLazyLoadingProxies();
 
@@ -117,6 +117,10 @@ namespace GestoresAPI.Models.Contexts
                    entity.Property(p => p.FhModificacion).IsRequired(required: false);
                    entity.Property(p => p.UsuarioModifica).IsRequired(required: false);
                });
+            //modelBuilder.Entity<EmployeesHistory>(entity =>
+            //{ 
+            //    entity.HasNoKey();
+            //});
         }
     }
 }

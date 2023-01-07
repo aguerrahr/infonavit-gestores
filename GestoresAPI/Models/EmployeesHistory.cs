@@ -2,19 +2,19 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Collections.Generic;
-
+using Microsoft.EntityFrameworkCore;
 
 namespace GestoresAPI.Models
 {
-    [Table("Employees")]
-    public class Employee
+    
+    [Table("EmployeesHistory")]    
+    public partial class EmployeesHistory
     {
-        [Key]
-        [Column("EmployeeId")]
-        public string ID  { get; set; }
+        [Key, Column("EmployeeId", Order = 1)]
+        
+        public string ID { get; set; }
         [Column("JobId")]
-        public byte IdJob { get; set; }
-        public virtual Job Job { get; set; }
+        public byte IdJob { get; set; }        
         [Column("In")]
         public string IN { get; set; }
         [Column("Name")]
@@ -41,8 +41,10 @@ namespace GestoresAPI.Models
         [Column("InModifica")]
         [StringLength(15)]
         public string? InModifica { get; set; }
-        public virtual ICollection<Role> Roles { get; set; }
-        public virtual ICollection<Employee> Managers { get; set; }
-        public virtual ICollection<Employee> SubEmployees { get; set; }
+        [Column("InOperativo")]
+        [StringLength(15)]
+        public string? InOperativo { get; set; }
+        [Column("FacultyId")]
+        public int FacultyId { get; set; }
     }
 }
