@@ -40,6 +40,22 @@ namespace GestoresAPI.Controllers
                 }
             );
             var rows = query.ToList();
+
+            //zutjmx@gmail.com: que aparezca ASESOR en lugar de GESTOR ini
+            foreach (var row in rows)
+            {
+                if(row.Name.Equals("GESTOR",System.StringComparison.OrdinalIgnoreCase))
+                {
+                    row.Name = "ASESOR";
+                }
+
+                if (row.Name.Equals("ADMINISTRATIVO", System.StringComparison.OrdinalIgnoreCase))
+                {
+                    row.Name = "ADMINISTRADOR";
+                }
+            }
+            //zutjmx@gmail.com: que aparezca ASESOR en lugar de GESTOR fin
+
             return new JsonResult(rows);
         }
     }
