@@ -50,7 +50,22 @@ namespace GestoresAPI.Controllers
                     UsuarioModifica = dh.UsuarioModifica,
                     Activo = dh.Activo,
                     TipoDerechoHabiente = dh.TipoDerechoHabiente,
-                    NbTpDH = tpdh.Descripcion
+                    NbTpDH = tpdh.Descripcion,
+                    InUsuairoEnrola= dh.UsuarioEnrola,
+                    InUsuairoModifica = dh.UsuarioModifica,
+                    NbUsuairoEnrola = (
+                        from u in context.Employees
+                        where (u.IN == dh.UsuarioEnrola)
+                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                    ).FirstOrDefault().ToString(),
+                    NbUsuairoModifica =
+                    dh.UsuarioModifica == null
+                    ? ""
+                    : (
+                            from u in context.Employees
+                            where (u.IN == dh.UsuarioModifica)
+                            select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                        ).FirstOrDefault().ToString(),
                 }
 
             );
@@ -82,18 +97,20 @@ namespace GestoresAPI.Controllers
                     Activo = dh.Activo,
                     TipoDerechoHabiente = dh.TipoDerechoHabiente,
                     NbTpDH = tpdh.Descripcion,
-                    NbUsuairoEnrola = ( 
-                        from u in context.Employees 
-                        where(u.IN == dh.UsuarioEnrola)
+                    InUsuairoEnrola = dh.UsuarioEnrola,
+                    InUsuairoModifica = dh.UsuarioModifica,
+                    NbUsuairoEnrola = (
+                        from u in context.Employees
+                        where (u.IN == dh.UsuarioEnrola)
                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
                     ).FirstOrDefault().ToString(),
                     NbUsuairoModifica =
                     dh.UsuarioModifica == null
                     ? ""
-                    :   (
+                    : (
                             from u in context.Employees
                             where (u.IN == dh.UsuarioModifica)
-                            select (u.Name + " " + u.LastName+ " " + u.MiddleName)
+                            select (u.Name + " " + u.LastName + " " + u.MiddleName)
                         ).FirstOrDefault().ToString(),
                 }
 

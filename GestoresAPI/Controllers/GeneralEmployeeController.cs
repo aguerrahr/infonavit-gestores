@@ -46,14 +46,16 @@ namespace GestoresAPI.Controllers
                         RFC = a.RFC,
                         NSS = a.NSS,
                         IdJob = a.IdJob,
-                        Enrolled = a.Enrolled,
-                        InRegistra = (a.InRegistra == null
+                        Enrolled = a.Enrolled,                        
+                        InRegistra = a.InRegistra,
+                        InModifica = a.InModifica,
+                        NbRegistra = (a.InRegistra == null
                                ? ""
                                : ((from b in context.Employees
                                    where b.IN == a.InRegistra
                                    select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
                                ),
-                        InModifica =
+                        NbModifica =
                                a.InModifica == null
                                ? ""
                                : (
@@ -92,13 +94,15 @@ namespace GestoresAPI.Controllers
                         NSS = a.NSS,
                         IdJob = a.IdJob,
                         Enrolled = a.Enrolled,
-                        InRegistra = (a.InRegistra == null
+                        InRegistra = a.InRegistra,
+                        InModifica = a.InModifica,
+                        NbRegistra = (a.InRegistra == null
                                ? ""
                                : ((from b in context.Employees
                                    where b.IN == a.InRegistra
                                    select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
                                ),
-                        InModifica =
+                        NbModifica =
                                a.InModifica == null
                                ? ""
                                : (
@@ -171,10 +175,10 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.Enabled = true;
                 verifyEmployee.IdJob = employeeRequest.IdJob;
                 verifyEmployee.CreatedAt = DateTime.Now;
-                verifyEmployee.InRegistra = employeeRequest.InRegistra;
+                //verifyEmployee.InRegistra = null;
                 verifyEmployee.InModifica = employeeRequest.InModifica;
                 /*------------------------------------------- History --------------------------------------------*/
-                    var employeehistory = new EmployeesHistory()
+                var employeehistory = new EmployeesHistory()
                     {
                         ID          = employeeRequest.IN,
                         IN          = employeeRequest.IN,
@@ -187,7 +191,7 @@ namespace GestoresAPI.Controllers
                         Enabled     = true,
                         IdJob       = employeeRequest.IdJob,
                         CreatedAt   = DateTime.Now,
-                        InRegistra  = employeeRequest.InRegistra,
+                        InRegistra  = null,
                         InModifica  = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar
                     };
@@ -230,7 +234,7 @@ namespace GestoresAPI.Controllers
                     CreatedAt = DateTime.Now,
                     Roles = new List<Role>() { rolle },
                     InRegistra = employeeRequest.InRegistra,
-                    InModifica = employeeRequest.InModifica
+                    InModifica = null
                 };
                 this.context.Employees.Add(employee);
                 
@@ -249,7 +253,7 @@ namespace GestoresAPI.Controllers
                         IdJob       = employeeRequest.IdJob,
                         CreatedAt   = DateTime.Now,
                         InRegistra  = employeeRequest.InRegistra,
-                        InModifica  = employeeRequest.InModifica,
+                        InModifica  = null,
                         FacultyId   = 1 //Alta
                     };                
                 this.context.EmployeesHistories.Add(employeehistory);
@@ -292,7 +296,7 @@ namespace GestoresAPI.Controllers
                     Enabled     = true,
                     IdJob       = employee.IdJob,
                     CreatedAt   = DateTime.Now,
-                    InRegistra  = employee.InRegistra,
+                    InRegistra  = null,  
                     InModifica  = employee.InModifica,
                     FacultyId   = 2 //Baja
                 };

@@ -41,6 +41,13 @@ namespace GestoresAPI.Models
         [Column("InModifica")]
         [StringLength(15)]
         public string? InModifica { get; set; }
+        [NotMapped]
+        public string NbRegistra { get; set; }
+        [NotMapped]
+        public string NbModifica { get; set; }
+
+
+
         public virtual ICollection<Role> Roles { get; set; }
         public virtual ICollection<Employee> Managers { get; set; }
         public virtual ICollection<Employee> SubEmployees { get; set; }

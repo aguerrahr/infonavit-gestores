@@ -12,7 +12,9 @@ namespace GestoresAPI.DTO
     {
         public DerechoHabienteDTO(DerechoHabiente derechoHabiente) =>
           (Id, Nombre, APaterno, AMaterno, Nss, Curp, FhEnrolamiento, FhModificacion, UsuarioEnrola, UsuarioModifica, Activo, TipoDerechoHabiente) =
-(derechoHabiente.Id, derechoHabiente.Nombre, derechoHabiente.APaterno, derechoHabiente.AMaterno, derechoHabiente.Nss, derechoHabiente.Curp, derechoHabiente.FhEnrolamiento, derechoHabiente.FhModificacion, derechoHabiente.UsuarioEnrola, derechoHabiente.UsuarioModifica, derechoHabiente.Activo, derechoHabiente.TipoDerechoHabiente);
+(derechoHabiente.Id, derechoHabiente.Nombre, derechoHabiente.APaterno, derechoHabiente.AMaterno, derechoHabiente.Nss, derechoHabiente.Curp, 
+            derechoHabiente.FhEnrolamiento, derechoHabiente.FhModificacion, derechoHabiente.UsuarioEnrola, derechoHabiente.UsuarioModifica, 
+            derechoHabiente.Activo, derechoHabiente.TipoDerechoHabiente);
 
         [JsonConstructor]
         public DerechoHabienteDTO()
@@ -34,6 +36,8 @@ namespace GestoresAPI.DTO
         public String NbTpDH { get; set; }
         public String NbUsuairoEnrola { get; set; }
         public String NbUsuairoModifica { get; set; }
+        public String InUsuairoEnrola { get; set; }
+        public String InUsuairoModifica { get; set; }
     }    
 }
 
