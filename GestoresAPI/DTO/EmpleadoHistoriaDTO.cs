@@ -33,5 +33,9 @@ namespace GestoresAPI.DTO
         public string? InModifica { get; set; }
         public string? InOperativo { get; set; }
         public int FacultyId { get; set; }
+        [NotMapped]
+        public string NbRegistra { get; set; }
+        [NotMapped]
+        public string NbModifica { get; set; }
     }
 }

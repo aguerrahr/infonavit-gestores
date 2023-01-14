@@ -61,20 +61,22 @@ namespace GestoresAPI.Controllers
                             NSS = em.NSS,
                             IdJob = em.IdJob,
                             Enrolled = em.Enrolled,
-                            InRegistra = (em.InRegistra == null
-                           ? ""
-                           : ((from b in context.Employees
-                               where b.IN == em.InRegistra
-                               select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
-                           ),
-                            InModifica =
-                           em.InModifica == null
-                           ? ""
-                           : (
-                                    from u in context.Employees
-                                    where (u.IN == em.InModifica)
-                                    select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                ).FirstOrDefault().ToString()
+                            InRegistra = em.InRegistra,
+                            InModifica = em.InModifica,
+                            NbRegistra = (em.InRegistra == null
+                               ? ""
+                               : ((from b in context.Employees
+                                   where b.IN == em.InRegistra
+                                   select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
+                               ),
+                            NbModifica =
+                               em.InModifica == null
+                               ? ""
+                               : (
+                                        from u in context.Employees
+                                        where (u.IN == em.InModifica)
+                                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                                    ).FirstOrDefault().ToString()
                         }
                        );            
             return employees.Count() > 0 ?
@@ -124,20 +126,22 @@ namespace GestoresAPI.Controllers
                             NSS = em.NSS,
                             IdJob = em.IdJob,
                             Enrolled = em.Enrolled,
-                            InRegistra = (em.InRegistra == null
-                           ? ""
-                           : ((from b in context.Employees
-                               where b.IN == em.InRegistra
-                               select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
-                           ),
-                            InModifica =
-                           em.InModifica == null
-                           ? ""
-                           : (
-                                    from u in context.Employees
-                                    where (u.IN == em.InModifica)
-                                    select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                ).FirstOrDefault().ToString()
+                            InRegistra = em.InRegistra,
+                            InModifica = em.InModifica,
+                            NbRegistra = (em.InRegistra == null
+                               ? ""
+                               : ((from b in context.Employees
+                                   where b.IN == em.InRegistra
+                                   select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
+                               ),
+                            NbModifica =
+                               em.InModifica == null
+                               ? ""
+                               : (
+                                        from u in context.Employees
+                                        where (u.IN == em.InModifica)
+                                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                                    ).FirstOrDefault().ToString()
                         }
                        );
             return employees.Count() > 0 ?
@@ -178,20 +182,22 @@ namespace GestoresAPI.Controllers
                             NSS = em.NSS,
                             IdJob = em.IdJob,
                             Enrolled = em.Enrolled,
-                            InRegistra = (em.InRegistra == null
-                            ? ""
-                            : ((from b in context.Employees
-                               where b.IN == em.InRegistra
-                               select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
-                            ),
-                            InModifica =
-                            em.InModifica == null
-                            ? ""
-                            : (
-                                    from u in context.Employees
-                                    where (u.IN == em.InModifica)
-                                    select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                ).FirstOrDefault().ToString()
+                            InRegistra = em.InRegistra,
+                            InModifica = em.InModifica,
+                            NbRegistra = (em.InRegistra == null
+                               ? ""
+                               : ((from b in context.Employees
+                                   where b.IN == em.InRegistra
+                                   select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
+                               ),
+                            NbModifica =
+                               em.InModifica == null
+                               ? ""
+                               : (
+                                        from u in context.Employees
+                                        where (u.IN == em.InModifica)
+                                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                                    ).FirstOrDefault().ToString()
                         }
                        ).Take(1);
             return employee != null
@@ -253,7 +259,7 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.NSS          = employeeRequest.NSS;
                 verifyEmployee.Enabled      = true;
                 verifyEmployee.CreatedAt    = DateTime.Now;
-                verifyEmployee.InRegistra   = employeeRequest.InRegistra;
+                verifyEmployee.InRegistra   = null;
                 verifyEmployee.InModifica   = employeeRequest.InModifica;
                 /*------------------------------------------- History --------------------------------------------*/
                     var employeehistory = new EmployeesHistory()
@@ -269,7 +275,7 @@ namespace GestoresAPI.Controllers
                         Enabled     = true,
                         IdJob       = employeeRequest.IdJob,
                         CreatedAt   = DateTime.Now,
-                        InRegistra  = employeeRequest.InRegistra,
+                        InRegistra  = null,
                         InModifica  = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar
                     };
@@ -309,7 +315,7 @@ namespace GestoresAPI.Controllers
                     CreatedAt   = DateTime.Now,
                     Roles       = new List<Role>() { rolle },
                     InRegistra  = employeeRequest.InRegistra,
-                    InModifica  = employeeRequest.InModifica
+                    InModifica  = null
                 };
                 this.context.Employees.Add(employee);
                 /*------------------------------------------- History --------------------------------------------*/
@@ -327,7 +333,7 @@ namespace GestoresAPI.Controllers
                         IdJob       = employeeRequest.IdJob,
                         CreatedAt   = DateTime.Now,
                         InRegistra  = employeeRequest.InRegistra,
-                        InModifica  = employeeRequest.InModifica,
+                        InModifica  = null,
                         FacultyId   = 1 //Alta
                     };                
                 this.context.EmployeesHistories.Add(employeehistory);
@@ -370,7 +376,7 @@ namespace GestoresAPI.Controllers
                     Enabled     = true,
                     IdJob       = employee.IdJob,
                     CreatedAt   = DateTime.Now,
-                    InRegistra  = employee.InRegistra,
+                    //InRegistra  = employee.InRegistra,
                     InModifica  = employee.InModifica,
                     FacultyId   = 2 //Baja
                 };
@@ -432,7 +438,7 @@ namespace GestoresAPI.Controllers
                     IdJob       = employee.IdJob,
                     CreatedAt   = DateTime.Now,
                     InRegistra  = employee.InRegistra,
-                    InModifica  = employee.InModifica,
+                    //InModifica  = employee.InModifica,
                     FacultyId   = 1 //Alta
                 };
                 this.context.EmployeesHistories.Add(employeehistory);

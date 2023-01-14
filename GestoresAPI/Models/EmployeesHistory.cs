@@ -46,5 +46,9 @@ namespace GestoresAPI.Models
         public string? InOperativo { get; set; }
         [Column("FacultyId")]
         public int FacultyId { get; set; }
+        [NotMapped]
+        public string NbRegistra { get; set; }
+        [NotMapped]
+        public string NbModifica { get; set; }
     }
 }
