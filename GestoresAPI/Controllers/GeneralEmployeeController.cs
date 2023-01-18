@@ -128,6 +128,7 @@ namespace GestoresAPI.Controllers
         public IActionResult Add([FromBody] EmpleadoDTO employeeRequest)
         {
             _logger.LogInformation("Adding gerente for IN: " + employeeRequest.IN);
+            DateTime fechaCreacionOriginal;
             //Request Validations
             if (employeeRequest.IN.Length > 15)
             {
@@ -164,6 +165,9 @@ namespace GestoresAPI.Controllers
             if (null != verifyEmployee && verifyEmployee.Enabled)
             {
                 return Conflict("El registro ya se encuentra realizado.");
+            } else
+            {
+                fechaCreacionOriginal = (DateTime)verifyEmployee.CreatedAt;
             }
             if (null != verifyEmployee && !verifyEmployee.Enabled)
             {
@@ -196,6 +200,7 @@ namespace GestoresAPI.Controllers
                         IdJob       = employeeRequest.IdJob,
                         UpdatedAt   = DateTime.Now,
                         InRegistra  = null,
+                        CreatedAt = fechaCreacionOriginal,
                         InModifica  = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar
                     };
