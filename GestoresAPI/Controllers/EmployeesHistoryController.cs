@@ -65,7 +65,7 @@ namespace GestoresAPI.Controllers
                               
                               
                           }
-                          );
+                          ).OrderBy(x => x.IN);
             return employee != null ?
                     new JsonResult(employee)
                     : NoContent();
