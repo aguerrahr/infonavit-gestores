@@ -258,7 +258,7 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.RFC          = employeeRequest.RFC;
                 verifyEmployee.NSS          = employeeRequest.NSS;
                 verifyEmployee.Enabled      = true;
-                verifyEmployee.CreatedAt    = DateTime.Now;
+                verifyEmployee.UpdatedAt    = DateTime.Now;
                 verifyEmployee.InRegistra   = null;
                 verifyEmployee.InModifica   = employeeRequest.InModifica;
                 /*------------------------------------------- History --------------------------------------------*/
@@ -274,7 +274,7 @@ namespace GestoresAPI.Controllers
                         NSS         = employeeRequest.NSS,
                         Enabled     = true,
                         IdJob       = employeeRequest.IdJob,
-                        CreatedAt   = DateTime.Now,
+                        UpdatedAt   = DateTime.Now,
                         InRegistra  = null,
                         InModifica  = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar
@@ -375,7 +375,7 @@ namespace GestoresAPI.Controllers
                     NSS         = employee.NSS,
                     Enabled     = true,
                     IdJob       = employee.IdJob,
-                    CreatedAt   = DateTime.Now,
+                    UpdatedAt   = DateTime.Now,
                     //InRegistra  = employee.InRegistra,
                     InModifica  = employee.InModifica,
                     FacultyId   = 2 //Baja

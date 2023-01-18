@@ -9,8 +9,8 @@ namespace GestoresAPI.DTO
     public class EmpleadoHistoriaDTO
     {
         public EmpleadoHistoriaDTO(EmployeesHistory employee) =>
-            (IN, Name, LastName, MiddleName, RFC, NSS, CURP, IdJob, Enrolled, InRegistra, InModifica, InOperativo) =
-            (employee.ID, employee.Name, employee.LastName, employee.MiddleName, employee.RFC, employee.NSS, employee.CURP, employee.IdJob, employee.Enrolled, employee.InRegistra, employee.InModifica, employee.InOperativo);
+            (IN, Name, LastName, MiddleName, RFC, NSS, CreatedAt, UpdatedAt, CURP, IdJob, Enrolled, InRegistra, InModifica, InOperativo) =
+            (employee.ID, employee.Name, employee.LastName, employee.MiddleName, employee.RFC, employee.NSS, employee.CreatedAt, employee.UpdatedAt, employee.CURP, employee.IdJob, employee.Enrolled, employee.InRegistra, employee.InModifica, employee.InOperativo);
 
         [JsonConstructor]
         public EmpleadoHistoriaDTO()
@@ -26,7 +26,8 @@ namespace GestoresAPI.DTO
         public string CURP { get; set; }
         public string RFC { get; set; }
         public string NSS { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }               
+        public DateTime? UpdatedAt { get; set; }
         public bool Enabled { get; set; }
         public byte Enrolled { get; set; }
         public string? InRegistra { get; set; }
@@ -34,8 +35,8 @@ namespace GestoresAPI.DTO
         public string? InOperativo { get; set; }
         public int FacultyId { get; set; }
         [NotMapped]
-        public string NbRegistra { get; set; }
+        public string? NbRegistra { get; set; }
         [NotMapped]
-        public string NbModifica { get; set; }
+        public string? NbModifica { get; set; }
     }
 }

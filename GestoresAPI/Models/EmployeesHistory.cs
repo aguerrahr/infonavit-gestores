@@ -30,7 +30,10 @@ namespace GestoresAPI.Models
         [Column("Ssn")]
         public string NSS { get; set; }
         [Column("CreatedAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+
+        [Column("UpdatedAt")]
+        public DateTime? UpdatedAt { get; set; }
         [Column("Enabled")]
         public bool Enabled { get; set; }
         [Column("Enrolled")]
@@ -47,8 +50,8 @@ namespace GestoresAPI.Models
         [Column("FacultyId")]
         public int FacultyId { get; set; }
         [NotMapped]
-        public string NbRegistra { get; set; }
+        public string? NbRegistra { get; set; }
         [NotMapped]
-        public string NbModifica { get; set; }
+        public string? NbModifica { get; set; }
     }
 }

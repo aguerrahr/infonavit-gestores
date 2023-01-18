@@ -30,7 +30,11 @@ namespace GestoresAPI.Models
         [Column("Ssn")]
         public string NSS { get; set; }
         [Column("CreatedAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
+        
+        [Column("UpdatedAt")]
+        public DateTime? UpdatedAt { get; set; }
+
         [Column("Enabled")]
         public bool Enabled { get; set; }
         [Column("Enrolled")]

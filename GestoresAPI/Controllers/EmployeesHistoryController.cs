@@ -58,7 +58,10 @@ namespace GestoresAPI.Controllers
                                        from u in context.Employees
                                        where (u.IN == em.InModifica)
                                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                   ).FirstOrDefault().ToString()
+                                   ).FirstOrDefault().ToString(),
+                              CreatedAt= em.CreatedAt,
+                              UpdatedAt= em.UpdatedAt,
+                              
                           }
                           );
             return employee != null ?

@@ -62,7 +62,9 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == a.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString()
+                                    ).FirstOrDefault().ToString(),
+                        CreatedAt= a.CreatedAt,
+                        UpdatedAt= a.UpdatedAt,
                     }
                 );
 
@@ -109,7 +111,9 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == a.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString()
+                                    ).FirstOrDefault().ToString(),
+                        CreatedAt= a.CreatedAt,
+                        UpdatedAt= a.UpdatedAt,
                     }
                 );
 
@@ -174,7 +178,7 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.NSS = employeeRequest.NSS;
                 verifyEmployee.Enabled = true;
                 verifyEmployee.IdJob = employeeRequest.IdJob;
-                verifyEmployee.CreatedAt = DateTime.Now;
+                verifyEmployee.UpdatedAt = DateTime.Now;
                 //verifyEmployee.InRegistra = null;
                 verifyEmployee.InModifica = employeeRequest.InModifica;
                 /*------------------------------------------- History --------------------------------------------*/
@@ -190,7 +194,7 @@ namespace GestoresAPI.Controllers
                         NSS         = employeeRequest.NSS,
                         Enabled     = true,
                         IdJob       = employeeRequest.IdJob,
-                        CreatedAt   = DateTime.Now,
+                        UpdatedAt   = DateTime.Now,
                         InRegistra  = null,
                         InModifica  = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar

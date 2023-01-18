@@ -65,7 +65,7 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == em.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString()
+                                    ).FirstOrDefault().ToString(),                               
                            }
                            );
                 return employee != null ?
@@ -103,7 +103,7 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == em.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString()
+                                    ).FirstOrDefault().ToString(),                               
                            }
                            );
                 return employees.Count() > 0 ? 
@@ -151,7 +151,7 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == em.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString()
+                                    ).FirstOrDefault().ToString(),                                
                             }
                             );
             //_logger.LogInformation("[Job:" + employee.Job.Name + "]");
@@ -179,6 +179,7 @@ namespace GestoresAPI.Controllers
             employeeStored.NSS          = employeeRequest.NSS;
             employeeStored.IdJob        = employeeRequest.IdJob;
             employeeStored.Enrolled     = employeeRequest.Enrolled;
+            employeeStored.UpdatedAt    = employeeRequest.UpdatedAt;
             //employeeStored.InRegistra   = employeeRequest.InRegistra;
             employeeStored.InModifica   = employeeRequest.InModifica;
 
@@ -195,7 +196,7 @@ namespace GestoresAPI.Controllers
                     NSS         = employeeRequest.NSS,
                     Enabled     = true,
                     IdJob       = employeeRequest.IdJob,
-                    CreatedAt   = DateTime.Now,
+                    UpdatedAt   = DateTime.Now,
                     //InRegistra  = employeeRequest.InRegistra,
                     InRegistra  = null,
                     InModifica  = employeeRequest.InModifica,
