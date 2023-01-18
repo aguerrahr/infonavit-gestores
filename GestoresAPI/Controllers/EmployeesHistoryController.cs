@@ -61,6 +61,8 @@ namespace GestoresAPI.Controllers
                                    ).FirstOrDefault().ToString(),
                               CreatedAt= em.CreatedAt,
                               UpdatedAt= em.UpdatedAt,
+                              FacultyId= context.Faculties.Where(x=>x.ID == em.FacultyId).FirstOrDefault().Faculty,
+                              
                               
                           }
                           );
