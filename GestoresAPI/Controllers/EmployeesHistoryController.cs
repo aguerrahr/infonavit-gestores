@@ -61,9 +61,11 @@ namespace GestoresAPI.Controllers
                                    ).FirstOrDefault().ToString(),
                               CreatedAt= em.CreatedAt,
                               UpdatedAt= em.UpdatedAt,
+                              FacultyId= context.Faculties.Where(x=>x.ID == em.FacultyId).FirstOrDefault().Faculty,
+                              
                               
                           }
-                          );
+                          ).OrderBy(x => x.IN);
             return employee != null ?
                     new JsonResult(employee)
                     : NoContent();
