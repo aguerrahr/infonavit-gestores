@@ -182,7 +182,7 @@ namespace GestoresAPI.Controllers
             employeeStored.UpdatedAt    = employeeRequest.UpdatedAt;
             //employeeStored.InRegistra   = employeeRequest.InRegistra;
             employeeStored.InModifica   = employeeRequest.InModifica;
-
+            this.context.SaveChanges();
             /*------------------------------------------- History --------------------------------------------*/
                 var employeehistory = new EmployeesHistory()
                 {
@@ -204,7 +204,7 @@ namespace GestoresAPI.Controllers
                 };
                 this.context.EmployeesHistories.Add(employeehistory);
             /*------------------------------------------------------------------------------------------------*/
-            this.context.SaveChangesAsync();
+            this.context.SaveChanges();
             return Ok();
         }
     }

@@ -261,9 +261,9 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.UpdatedAt = DateTime.Now;
                 verifyEmployee.InRegistra = null;
                 verifyEmployee.InModifica = employeeRequest.InModifica;
-
+                this.context.SaveChanges();
                 /*------------------------------------------- History --------------------------------------------*/
-                    var employeehistory = new EmployeesHistory()
+                var employeehistory = new EmployeesHistory()
                     {
                         ID = employeeRequest.IN,
                         IN = employeeRequest.IN,
@@ -320,8 +320,9 @@ namespace GestoresAPI.Controllers
                     InModifica = null
                 };
                 this.context.Employees.Add(employee);
+                this.context.SaveChanges();
                 /*------------------------------------------- History --------------------------------------------*/
-                    var employeehistory = new EmployeesHistory()
+                var employeehistory = new EmployeesHistory()
                     {
                         ID = employeeRequest.IN,
                         IN = employeeRequest.IN,

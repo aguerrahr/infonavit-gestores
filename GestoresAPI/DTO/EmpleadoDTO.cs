@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 using GestoresAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GestoresAPI.DTO
 {
@@ -26,8 +27,8 @@ namespace GestoresAPI.DTO
         public string CURP { get; set; }
         public string RFC { get; set; }
         public string NSS { get; set; }
-        public DateTime? CreatedAt { get; set; }        
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; } = null;
+        public DateTime? UpdatedAt { get; set; } = null;
         public byte IdJob { get; set; }
         public byte Enrolled { get; set; }
 
