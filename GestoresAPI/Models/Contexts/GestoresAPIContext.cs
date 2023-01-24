@@ -19,6 +19,7 @@ namespace GestoresAPI.Models.Contexts
         public DbSet<DerechoHabiente> DerechoHabientes { get; set; }
         public DbSet<TipoDerechoHabiente> TipoDerechoHabientes { get; set; }
         public DbSet<EmployeesHistory> EmployeesHistories { get; set; }
+        public virtual DbSet<Authentication> Authentications { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseLazyLoadingProxies();
 

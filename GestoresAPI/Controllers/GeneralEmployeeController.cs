@@ -65,6 +65,11 @@ namespace GestoresAPI.Controllers
                                     ).FirstOrDefault().ToString(),
                         CreatedAt= a.CreatedAt,
                         UpdatedAt= a.UpdatedAt,
+                        NbJob = (
+                            from j in context.Jobs
+                            where (j.ID == a.IdJob)
+                            select( j.Name )
+                        ).FirstOrDefault().ToString()
                     }
                 );
 
@@ -114,6 +119,11 @@ namespace GestoresAPI.Controllers
                                     ).FirstOrDefault().ToString(),
                         CreatedAt= a.CreatedAt,
                         UpdatedAt= a.UpdatedAt,
+                        NbJob = (
+                            from j in context.Jobs
+                            where (j.ID == a.IdJob)
+                            select (j.Name)
+                        ).FirstOrDefault().ToString()
                     }
                 );
 

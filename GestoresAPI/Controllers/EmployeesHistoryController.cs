@@ -62,13 +62,37 @@ namespace GestoresAPI.Controllers
                               CreatedAt= em.CreatedAt,
                               UpdatedAt= em.UpdatedAt,
                               FacultyId= context.Faculties.Where(x=>x.ID == em.FacultyId).FirstOrDefault().Faculty,
-                              
-                              
+                              NbJob = (
+                                from j in context.Jobs
+                                where (j.ID == em.IdJob)
+                                select (j.Name)
+                                ).FirstOrDefault().ToString()
+
                           }
                           ).OrderBy(x => x.IN);
             return employee != null ?
                     new JsonResult(employee)
                     : NoContent();
+        }
+        [HttpGet("GetRepAuthentication")]
+        [Produces("application/json")]
+        public IActionResult GetRepAuthentication()
+        {
+            _logger.LogInformation("Fetching Tipo derechohabiente");
+            var query = (
+                from tdh in context.Authentications
+                select new
+                {
+                    IN = tdh.In,
+                    Nombre = ((from b in context.Employees
+                               where b.IN == tdh.In
+                               select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString()
+                             ),
+                   Fecha  = tdh.AuthenticatedAt
+                }
+            );
+            var rows = query.ToList();
+            return new JsonResult(rows);
         }
     }
 }

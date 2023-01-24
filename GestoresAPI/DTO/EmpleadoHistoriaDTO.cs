@@ -9,8 +9,9 @@ namespace GestoresAPI.DTO
     public class EmpleadoHistoriaDTO
     {
         public EmpleadoHistoriaDTO(EmployeesHistory employee) =>
-            (IN, Name, LastName, MiddleName, RFC, NSS, CreatedAt, UpdatedAt, CURP, IdJob, Enrolled, InRegistra, InModifica, InOperativo) =
-            (employee.ID, employee.Name, employee.LastName, employee.MiddleName, employee.RFC, employee.NSS, employee.CreatedAt, employee.UpdatedAt, employee.CURP, employee.IdJob, employee.Enrolled, employee.InRegistra, employee.InModifica, employee.InOperativo);
+            (IN, Name, LastName, MiddleName, RFC, NSS, CreatedAt, UpdatedAt, CURP, IdJob, Enrolled, InRegistra, InModifica, InOperativo,NbJob) =
+            (employee.ID, employee.Name, employee.LastName, employee.MiddleName, employee.RFC, employee.NSS, employee.CreatedAt, employee.UpdatedAt, employee.CURP, employee.IdJob, employee.Enrolled, employee.InRegistra, employee.InModifica, employee.InOperativo,
+            employee.NbJob);
 
         [JsonConstructor]
         public EmpleadoHistoriaDTO()
@@ -38,5 +39,7 @@ namespace GestoresAPI.DTO
         public string? NbRegistra { get; set; }
         [NotMapped]
         public string? NbModifica { get; set; }
+        [NotMapped]
+        public string? NbJob { get; set; }
     }
 }

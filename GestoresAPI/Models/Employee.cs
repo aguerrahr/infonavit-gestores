@@ -49,7 +49,8 @@ namespace GestoresAPI.Models
         public string NbRegistra { get; set; }
         [NotMapped]
         public string NbModifica { get; set; }
-
+        [NotMapped]
+        public string NbJob { get; set; }
 
 
         public virtual ICollection<Role> Roles { get; set; }
