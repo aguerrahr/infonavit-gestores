@@ -81,14 +81,14 @@ namespace GestoresAPI.Controllers
             _logger.LogInformation("Fetching Tipo derechohabiente");
             var query = (
                 from tdh in context.Authentications
-                select new
+                select new EmpleadoHistoriaDTO
                 {
                     IN = tdh.In,
-                    Nombre = ((from b in context.Employees
+                    Name = ((from b in context.Employees
                                where b.IN == tdh.In
                                select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString()
                              ),
-                   Fecha  = tdh.AuthenticatedAt
+                   CreatedAt  = tdh.AuthenticatedAt
                 }
             );
             var rows = query.ToList();
