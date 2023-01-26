@@ -217,8 +217,9 @@ namespace GestoresAPI.Controllers
             employeeStored.RFC          = employeeRequest.RFC;
             employeeStored.NSS          = employeeRequest.NSS;
             employeeStored.IdJob        = employeeRequest.IdJob;
-            employeeStored.Enrolled     = employeeRequest.Enrolled;
-            employeeStored.UpdatedAt    = employeeRequest.UpdatedAt;
+            //employeeStored.Enrolled     = employeeRequest.Enrolled; //zutjmx@gmail.com 26/01/2023 La propiedad enrolled no se debe de modificar
+            //employeeStored.UpdatedAt    = employeeRequest.UpdatedAt;
+            employeeStored.UpdatedAt = DateTime.Now; //zutjmx@gmail.com 26/01/2023 La fecha de actualización se iba vacía
             //employeeStored.InRegistra   = employeeRequest.InRegistra;
             employeeStored.InModifica   = employeeRequest.InModifica;
             this.context.SaveChanges();
@@ -236,6 +237,7 @@ namespace GestoresAPI.Controllers
                     Enabled     = true,
                     IdJob       = employeeRequest.IdJob,
                     UpdatedAt   = DateTime.Now,
+                    CreatedAt = employeeStored.CreatedAt, //zutjmx@gmail.com 20/01/2023
                     //InRegistra  = employeeRequest.InRegistra,
                     InRegistra  = null,
                     InModifica  = employeeRequest.InModifica,
