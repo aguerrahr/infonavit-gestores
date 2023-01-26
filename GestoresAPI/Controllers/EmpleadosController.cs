@@ -21,6 +21,45 @@ namespace GestoresAPI.Controllers
             this.context = context;
             _logger = logger;
         }
+        [HttpGet("EmployeesEntity")]
+        [Produces("application/json")]
+        public IActionResult EmployeesEntity()
+        {            
+            var employee =
+                        (from em in context.Employees
+                        select new 
+                        {
+                            IN = em.IN,
+                            Name = em.Name,
+                            LastName = em.LastName,
+                            MiddleName = em.MiddleName,
+                            CURP = em.CURP,
+                            RFC = em.RFC,
+                            NSS = em.NSS,
+                            IdJob = em.IdJob,
+                            Enrolled = em.Enrolled,
+                            InRegistra = em.InRegistra,
+                            InModifica = em.InModifica,
+                            NbRegistra = (em.InRegistra == null
+                            ? ""
+                            : ((from b in context.Employees
+                                where b.IN == em.InRegistra
+                                select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
+                            ),
+                            NbModifica =
+                            em.InModifica == null
+                            ? ""
+                            : (
+                                    from u in context.Employees
+                                    where (u.IN == em.InModifica)
+                                    select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                                ).FirstOrDefault().ToString(),
+                            Enabled = em.Enabled
+                        });
+            return employee != null ?
+                new JsonResult(employee)
+                : NoContent();
+        }                    
         [HttpGet]
         [Produces("application/json")]
         public IActionResult Query([FromQuery(Name = "in")] string identifier, [FromQuery] string type)
