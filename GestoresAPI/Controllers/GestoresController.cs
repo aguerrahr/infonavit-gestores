@@ -274,9 +274,8 @@ namespace GestoresAPI.Controllers
                         NSS         = employeeRequest.NSS,
                         Enabled     = true,
                         IdJob       = employeeRequest.IdJob,
-                        UpdatedAt   = DateTime.Now,
-                        InRegistra  = null,
-                        InModifica  = employeeRequest.InModifica,
+                        CreatedAt   = DateTime.Now, //zutjmx@gmail.com 20/01/2023
+                        InRegistra  = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar
                     };
                     this.context.EmployeesHistories.Add(employeehistory);

@@ -24,50 +24,50 @@ namespace GestoresAPI.Controllers
         [HttpGet("EmployeesEntity")]
         [Produces("application/json")]
         public IActionResult EmployeesEntity()
-        {            
+        {
             var employee =
                         (from em in context.Employees
-                        select new 
-                        {
-                            IN = em.IN,
-                            Name = em.Name,
-                            LastName = em.LastName,
-                            MiddleName = em.MiddleName,
-                            CURP = em.CURP,
-                            RFC = em.RFC,
-                            NSS = em.NSS,
-                            IdJob = em.IdJob,
-                            Enrolled = em.Enrolled,
-                            InRegistra = em.InRegistra,
-                            InModifica = em.InModifica,
-                            NbRegistra = (em.InRegistra == null
-                            ? ""
-                            : ((from b in context.Employees
-                                where b.IN == em.InRegistra
-                                select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
-                            ),
-                            NbModifica =
-                            em.InModifica == null
-                            ? ""
-                            : (
-                                    from u in context.Employees
-                                    where (u.IN == em.InModifica)
-                                    select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                ).FirstOrDefault().ToString(),
-                            Enabled = em.Enabled
-                        });
+                         select new
+                         {
+                             IN = em.IN,
+                             Name = em.Name,
+                             LastName = em.LastName,
+                             MiddleName = em.MiddleName,
+                             CURP = em.CURP,
+                             RFC = em.RFC,
+                             NSS = em.NSS,
+                             IdJob = em.IdJob,
+                             Enrolled = em.Enrolled,
+                             InRegistra = em.InRegistra,
+                             InModifica = em.InModifica,
+                             NbRegistra = (em.InRegistra == null
+                             ? ""
+                             : ((from b in context.Employees
+                                 where b.IN == em.InRegistra
+                                 select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
+                             ),
+                             NbModifica =
+                             em.InModifica == null
+                             ? ""
+                             : (
+                                     from u in context.Employees
+                                     where (u.IN == em.InModifica)
+                                     select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                                 ).FirstOrDefault().ToString(),
+                             Enabled = em.Enabled
+                         });
             return employee != null ?
                 new JsonResult(employee)
                 : NoContent();
-        }                    
+        }
         [HttpGet]
         [Produces("application/json")]
         public IActionResult Query([FromQuery(Name = "in")] string identifier, [FromQuery] string type)
         {
             _logger.LogInformation("Query for in: " + identifier + " and type: " + type);
-            
+
             var job = this.context.Jobs.FirstOrDefault(f => f.Name.Equals(type.ToUpper()));
-            if(job == null)
+            if (job == null)
             {
                 return NoContent();
             }
@@ -79,44 +79,6 @@ namespace GestoresAPI.Controllers
                            (
                            from em in context.Employees.Where(e => e.ID.Equals(identifier) && e.IdJob.Equals(job.ID) && e.Enabled)
                            select new EmpleadoDTO
-                           {
-                               IN = em.IN,
-                               Name = em.Name,
-                               LastName = em.LastName,
-                               MiddleName = em.MiddleName,
-                               CURP = em.CURP,
-                               RFC = em.RFC,
-                               NSS = em.NSS,
-                               IdJob = em.IdJob,
-                               Enrolled = em.Enrolled,
-                               InRegistra = em.InRegistra,
-                               InModifica = em.InModifica,                               
-                               NbRegistra = (em.InRegistra == null
-                               ? ""
-                               : ((from b in context.Employees
-                                   where b.IN == em.InRegistra
-                                   select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
-                               ),
-                               NbModifica =
-                               em.InModifica == null
-                               ? ""
-                               : (
-                                        from u in context.Employees
-                                        where (u.IN == em.InModifica)
-                                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString(),                               
-                           }
-                           );
-                return employee != null ?
-                    new JsonResult(employee)
-                    : NoContent();
-            }
-            else {
-                //var employees = this.context.Employees.Where(e => e.IdJob.Equals(job.ID) && e.Enabled).ToList();
-                IQueryable<EmpleadoDTO> employees =
-                           (
-                           from em in context.Employees.Where(e => e.IdJob.Equals(job.ID) && e.Enabled)
-                           select new EmpleadoDTO  
                            {
                                IN = em.IN,
                                Name = em.Name,
@@ -142,10 +104,49 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == em.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString(),                               
+                                    ).FirstOrDefault().ToString(),
                            }
                            );
-                return employees.Count() > 0 ? 
+                return employee != null ?
+                    new JsonResult(employee)
+                    : NoContent();
+            }
+            else
+            {
+                //var employees = this.context.Employees.Where(e => e.IdJob.Equals(job.ID) && e.Enabled).ToList();
+                IQueryable<EmpleadoDTO> employees =
+                           (
+                           from em in context.Employees.Where(e => e.IdJob.Equals(job.ID) && e.Enabled)
+                           select new EmpleadoDTO
+                           {
+                               IN = em.IN,
+                               Name = em.Name,
+                               LastName = em.LastName,
+                               MiddleName = em.MiddleName,
+                               CURP = em.CURP,
+                               RFC = em.RFC,
+                               NSS = em.NSS,
+                               IdJob = em.IdJob,
+                               Enrolled = em.Enrolled,
+                               InRegistra = em.InRegistra,
+                               InModifica = em.InModifica,
+                               NbRegistra = (em.InRegistra == null
+                               ? ""
+                               : ((from b in context.Employees
+                                   where b.IN == em.InRegistra
+                                   select (b.Name + " " + b.LastName + " " + b.MiddleName)).FirstOrDefault().ToString())
+                               ),
+                               NbModifica =
+                               em.InModifica == null
+                               ? ""
+                               : (
+                                        from u in context.Employees
+                                        where (u.IN == em.InModifica)
+                                        select (u.Name + " " + u.LastName + " " + u.MiddleName)
+                                    ).FirstOrDefault().ToString(),
+                           }
+                           );
+                return employees.Count() > 0 ?
                     new JsonResult(employees)
                     : NoContent();
             }
@@ -166,15 +167,15 @@ namespace GestoresAPI.Controllers
                             from em in context.Employees.Where(e => e.IN.Equals(identifier) && e.Enabled)
                             select new EmpleadoDTO
                             {
-                                IN          = em.IN,
-                                Name        = em.Name,
-                                LastName    = em.LastName,
-                                MiddleName  = em.MiddleName,
-                                CURP        = em.CURP,
-                                RFC         = em.RFC,
-                                NSS         = em.NSS,
-                                IdJob       = em.IdJob,
-                                Enrolled    = em.Enrolled,
+                                IN = em.IN,
+                                Name = em.Name,
+                                LastName = em.LastName,
+                                MiddleName = em.MiddleName,
+                                CURP = em.CURP,
+                                RFC = em.RFC,
+                                NSS = em.NSS,
+                                IdJob = em.IdJob,
+                                Enrolled = em.Enrolled,
                                 InRegistra = em.InRegistra,
                                 InModifica = em.InModifica,
                                 NbRegistra = (em.InRegistra == null
@@ -190,7 +191,7 @@ namespace GestoresAPI.Controllers
                                         from u in context.Employees
                                         where (u.IN == em.InModifica)
                                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
-                                    ).FirstOrDefault().ToString(),                                
+                                    ).FirstOrDefault().ToString(),
                             }
                             );
             //_logger.LogInformation("[Job:" + employee.Job.Name + "]");
@@ -205,48 +206,93 @@ namespace GestoresAPI.Controllers
         {
             _logger.LogInformation("Updting employee informtion, in: " + identifier);
             var employeeStored = this.context.Employees.FirstOrDefault(e => e.IN.Equals(identifier) && e.Enabled);
-            if(employeeStored == null)
+            if (employeeStored == null)
             {
                 return NotFound();
-            }            
-            employeeStored.IN           = employeeRequest.IN;
-            employeeStored.Name         = employeeRequest.Name;
-            employeeStored.MiddleName   = employeeRequest.MiddleName;
-            employeeStored.LastName     = employeeRequest.LastName;
-            employeeStored.CURP         = employeeRequest.CURP;
-            employeeStored.RFC          = employeeRequest.RFC;
-            employeeStored.NSS          = employeeRequest.NSS;
-            employeeStored.IdJob        = employeeRequest.IdJob;
+            }
+            employeeStored.IN = employeeRequest.IN;
+            employeeStored.Name = employeeRequest.Name;
+            employeeStored.MiddleName = employeeRequest.MiddleName;
+            employeeStored.LastName = employeeRequest.LastName;
+            employeeStored.CURP = employeeRequest.CURP;
+            employeeStored.RFC = employeeRequest.RFC;
+            employeeStored.NSS = employeeRequest.NSS;
+            employeeStored.IdJob = employeeRequest.IdJob;
             //employeeStored.Enrolled     = employeeRequest.Enrolled; //zutjmx@gmail.com 26/01/2023 La propiedad enrolled no se debe de modificar
             //employeeStored.UpdatedAt    = employeeRequest.UpdatedAt;
             employeeStored.UpdatedAt = DateTime.Now; //zutjmx@gmail.com 26/01/2023 La fecha de actualización se iba vacía
-            //employeeStored.InRegistra   = employeeRequest.InRegistra;
-            employeeStored.InModifica   = employeeRequest.InModifica;
+            //employeeStored.InRegistra = employeeRequest.InRegistra;
+            employeeStored.InModifica = employeeRequest.InModifica;
+            employeeStored.Enabled = employeeRequest.Enabled;
             this.context.SaveChanges();
             /*------------------------------------------- History --------------------------------------------*/
-                var employeehistory = new EmployeesHistory()
-                {
-                    ID          = employeeRequest.IN,
-                    IN          = employeeRequest.IN,
-                    Name        = employeeRequest.Name,
-                    MiddleName  = employeeRequest.MiddleName,
-                    LastName    = employeeRequest.LastName,
-                    CURP        = employeeRequest.CURP,
-                    RFC         = employeeRequest.RFC,
-                    NSS         = employeeRequest.NSS,
-                    Enabled     = true,
-                    IdJob       = employeeRequest.IdJob,
-                    UpdatedAt   = DateTime.Now,
-                    CreatedAt = employeeStored.CreatedAt, //zutjmx@gmail.com 20/01/2023
-                    //InRegistra  = employeeRequest.InRegistra,
-                    InRegistra  = null,
-                    InModifica  = employeeRequest.InModifica,
-                    FacultyId   = 5 //Actualizar
-                };
-                this.context.EmployeesHistories.Add(employeehistory);
+            var employeehistory = new EmployeesHistory()
+            {
+                ID = employeeRequest.IN,
+                IN = employeeRequest.IN,
+                Name = employeeRequest.Name,
+                MiddleName = employeeRequest.MiddleName,
+                LastName = employeeRequest.LastName,
+                CURP = employeeRequest.CURP,
+                RFC = employeeRequest.RFC,
+                NSS = employeeRequest.NSS,
+                Enabled = true,
+                IdJob = employeeRequest.IdJob,
+                CreatedAt = DateTime.Now, //zutjmx@gmail.com 20/01/2023
+                InRegistra = employeeRequest.InModifica,
+                FacultyId = 5 //Actualizar
+            };
+            this.context.EmployeesHistories.Add(employeehistory);
             /*------------------------------------------------------------------------------------------------*/
             this.context.SaveChanges();
             return Ok();
         }
+
+        [HttpPatch()]
+        [Consumes("application/json")]
+        public IActionResult EnableDisableEmployee([FromBody] EmpleadoDTO employeeRequest)
+        {
+            _logger.LogInformation("Updting employee informtion, in: " + employeeRequest.IN);
+            var employeeStored = this.context.Employees.FirstOrDefault(e => e.IN.Equals(employeeRequest.IN));
+            if (employeeStored == null)
+            {
+                return NotFound();
+            }
+            employeeStored.IN = employeeRequest.IN;
+            employeeStored.Name = employeeRequest.Name;
+            employeeStored.MiddleName = employeeRequest.MiddleName;
+            employeeStored.LastName = employeeRequest.LastName;
+            employeeStored.CURP = employeeRequest.CURP;
+            employeeStored.RFC = employeeRequest.RFC;
+            employeeStored.NSS = employeeRequest.NSS;
+            employeeStored.IdJob = employeeRequest.IdJob;            
+            employeeStored.UpdatedAt = DateTime.Now; //zutjmx@gmail.com 26/01/2023 La fecha de actualización se iba vacía
+            
+            employeeStored.InModifica = employeeRequest.InModifica;
+            employeeStored.Enabled = employeeRequest.Enabled;
+            this.context.SaveChanges();
+            /*------------------------------------------- History --------------------------------------------*/
+            var employeehistory = new EmployeesHistory()
+            {
+                ID = employeeRequest.IN,
+                IN = employeeRequest.IN,
+                Name = employeeRequest.Name,
+                MiddleName = employeeRequest.MiddleName,
+                LastName = employeeRequest.LastName,
+                CURP = employeeRequest.CURP,
+                RFC = employeeRequest.RFC,
+                NSS = employeeRequest.NSS,
+                Enabled = true,
+                IdJob = employeeRequest.IdJob,
+                CreatedAt = DateTime.Now, //zutjmx@gmail.com 20/01/2023
+                InRegistra = employeeRequest.InModifica,
+                FacultyId = (employeeRequest.Enabled == true ? 6 : 7), //Actualizar
+            };
+            this.context.EmployeesHistories.Add(employeehistory);
+            /*------------------------------------------------------------------------------------------------*/
+            this.context.SaveChanges();
+            return Ok();
+        }
+
     }
 }

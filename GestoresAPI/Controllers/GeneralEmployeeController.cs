@@ -197,22 +197,20 @@ namespace GestoresAPI.Controllers
                 verifyEmployee.InModifica = employeeRequest.InModifica;
                 this.context.SaveChanges();
                 /*------------------------------------------- History --------------------------------------------*/
-                var employeehistory = new EmployeesHistory()
+                    var employeehistory = new EmployeesHistory()
                     {
-                        ID          = employeeRequest.IN,
-                        IN          = employeeRequest.IN,
-                        Name        = employeeRequest.Name,
-                        MiddleName  = employeeRequest.MiddleName,
-                        LastName    = employeeRequest.LastName,
-                        CURP        = employeeRequest.CURP,
-                        RFC         = employeeRequest.RFC,
-                        NSS         = employeeRequest.NSS,
-                        Enabled     = true,
-                        IdJob       = employeeRequest.IdJob,
-                        UpdatedAt   = DateTime.Now,
-                        InRegistra  = null,
-                        CreatedAt = fechaCreacionOriginal,
-                        InModifica  = employeeRequest.InModifica,
+                        ID = employeeRequest.IN,
+                        IN = employeeRequest.IN,
+                        Name = employeeRequest.Name,
+                        MiddleName = employeeRequest.MiddleName,
+                        LastName = employeeRequest.LastName,
+                        CURP = employeeRequest.CURP,
+                        RFC = employeeRequest.RFC,
+                        NSS = employeeRequest.NSS,
+                        Enabled = true,
+                        IdJob = employeeRequest.IdJob,
+                        CreatedAt = DateTime.Now, //zutjmx@gmail.com 20/01/2023
+                        InRegistra = employeeRequest.InModifica,
                         FacultyId   = 5 //Actualizar
                     };
                     this.context.EmployeesHistories.Add(employeehistory);
@@ -273,7 +271,6 @@ namespace GestoresAPI.Controllers
                         IdJob       = employeeRequest.IdJob,
                         CreatedAt   = DateTime.Now,
                         InRegistra  = employeeRequest.InRegistra,
-                        InModifica  = null,
                         FacultyId   = 1 //Alta
                     };                
                 this.context.EmployeesHistories.Add(employeehistory);
@@ -315,9 +312,8 @@ namespace GestoresAPI.Controllers
                     NSS         = employee.NSS,
                     Enabled     = true,
                     IdJob       = employee.IdJob,
-                    CreatedAt   = DateTime.Now,
-                    InRegistra  = null,  
-                    InModifica  = employee.InModifica,
+                    CreatedAt = DateTime.Now, //zutjmx@gmail.com 20/01/2023
+                    InRegistra = employee.InModifica,
                     FacultyId   = 2 //Baja
                 };
                 this.context.EmployeesHistories.Add(employeehistory);
