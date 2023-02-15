@@ -218,7 +218,7 @@ namespace GestoresAPI.Controllers
             employeeStored.RFC = employeeRequest.RFC;
             employeeStored.NSS = employeeRequest.NSS;
             employeeStored.IdJob = employeeRequest.IdJob;
-            //employeeStored.Enrolled     = employeeRequest.Enrolled; //zutjmx@gmail.com 26/01/2023 La propiedad enrolled no se debe de modificar
+            employeeStored.Enrolled     = 1; //zutjmx@gmail.com 14/02/2023 La regué gacho, ahora siempre se va como 1
             //employeeStored.UpdatedAt    = employeeRequest.UpdatedAt;
             employeeStored.UpdatedAt = DateTime.Now; //zutjmx@gmail.com 26/01/2023 La fecha de actualización se iba vacía
             //employeeStored.InRegistra = employeeRequest.InRegistra;

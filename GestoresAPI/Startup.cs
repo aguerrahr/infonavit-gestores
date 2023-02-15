@@ -27,6 +27,7 @@ namespace GestoresAPI
         //private static readonly string AUTHORIZATION_DOMAIN = "http://079301AQ45:14349/authmanager/";
         private static readonly string AUTHORIZATION_BASE_API = "api/Authentication";
         private string _generalThings;
+        private string _usarCifrado;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -39,9 +40,19 @@ namespace GestoresAPI
         {
             services.AddControllers();
             _generalThings = Configuration["CON_ENVIRONMENT"];
-            string _unprotected = Funciones.FuncionesUtiles.Decrypt(_generalThings);
-            services.AddDbContext<GestoresAPIContext>(opt =>
-                                               opt.UseSqlServer(_unprotected));
+            _usarCifrado = Configuration.GetValue<string>("usarCifrado");
+
+            if (_usarCifrado.Equals("true"))
+            {
+                string _unprotected = Funciones.FuncionesUtiles.Decrypt(_generalThings);                
+                services.AddDbContext<GestoresAPIContext>(opt =>
+                                                   opt.UseSqlServer(_unprotected));
+            } else
+            {
+                services.AddDbContext<GestoresAPIContext>(opt =>
+                                                   opt.UseSqlServer(_generalThings));
+            }
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GestoresAPI", Version = "v1" });
