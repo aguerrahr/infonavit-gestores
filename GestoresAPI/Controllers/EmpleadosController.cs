@@ -54,7 +54,9 @@ namespace GestoresAPI.Controllers
                                      where (u.IN == em.InModifica)
                                      select (u.Name + " " + u.LastName + " " + u.MiddleName)
                                  ).FirstOrDefault().ToString(),
-                             Enabled = em.Enabled
+                             Enabled = em.Enabled,
+                             CreatedAt = em.CreatedAt,
+                             UpdatedAt = em.UpdatedAt
                          });
             return employee != null ?
                 new JsonResult(employee)
