@@ -39,6 +39,9 @@ namespace GestoresAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors();
+
             _generalThings = Configuration["CON_ENVIRONMENT"];
             _usarCifrado = Configuration.GetValue<string>("usarCifrado");
 
