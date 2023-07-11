@@ -207,6 +207,8 @@ namespace GestoresAPI.Controllers
         public IActionResult Update([FromRoute(Name = "in")] string identifier, [FromBody] EmpleadoDTO employeeRequest)
         {
             _logger.LogInformation("Updting employee informtion, in: " + identifier);
+            Funciones.FuncionesUtiles.LogToFile("Entrando al método Update de EmpleadosController");
+            Funciones.FuncionesUtiles.LogToFile("Updting employee information, in: " + identifier);
             var employeeStored = this.context.Employees.FirstOrDefault(e => e.IN.Equals(identifier) && e.Enabled);
             if (employeeStored == null)
             {
@@ -247,6 +249,7 @@ namespace GestoresAPI.Controllers
             this.context.EmployeesHistories.Add(employeehistory);
             /*------------------------------------------------------------------------------------------------*/
             this.context.SaveChanges();
+            Funciones.FuncionesUtiles.LogToFile("Saliendo del método Update de EmpleadosController");
             return Ok();
         }
 

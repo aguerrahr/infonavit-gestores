@@ -19,7 +19,7 @@ namespace GestoresAPI.Funciones
             {
                 //string modoDebug = ConfigurationManager.AppSettings["modoDebug"];
                 //modoDebug = SecurityManager.Decrypt(modoDebug);
-                string filePrefix = "WsListaExcepcionLog";
+                string filePrefix = "gestoresapi";
 
                 //if (modoDebug.Equals("false"))
                 //{
@@ -29,14 +29,20 @@ namespace GestoresAPI.Funciones
                 string extension;
                 extension = "txt";
 
-                string filePath = @"c:/logautmanager";
+                string filePath = @"c:/test/gestoresapi";
                 //filePath = SecurityManager.Decrypt(filePath);
                 if (!Directory.Exists(filePath))
                     Directory.CreateDirectory(filePath);
 
-                string fileName = $"{filePath}/{filePrefix}{DateTime.Now.ToString("ddMMyyyy")}.{extension}";
+                string fileName = $"{filePath}/{filePrefix}-{DateTime.Now.ToString("ddMMyyyy")}.{extension}";
 
-                File.AppendAllText(fileName, DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss:tt") + " :: " + text + Environment.NewLine);
+                //File.AppendAllText(fileName, DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss:tt") + " :: " + text + Environment.NewLine);
+                using (StreamWriter writer = new StreamWriter(fileName, append: true))
+                {
+                    writer.WriteLine(DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss:tt") + " :: " + text);
+                    writer.Flush();
+                }
+
             }
             catch (Exception ex)
             {
