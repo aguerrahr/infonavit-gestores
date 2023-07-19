@@ -206,9 +206,9 @@ namespace GestoresAPI.Controllers
         [Consumes("application/json")]
         public IActionResult Update([FromRoute(Name = "in")] string identifier, [FromBody] EmpleadoDTO employeeRequest)
         {
-            _logger.LogInformation("Updting employee informtion, in: " + identifier);
+            _logger.LogInformation("Actualizando información del empleado, in: " + identifier);
             Funciones.FuncionesUtiles.LogToFile("Entrando al método Update de EmpleadosController");
-            Funciones.FuncionesUtiles.LogToFile("Updting employee information, in: " + identifier);
+            Funciones.FuncionesUtiles.LogToFile("Actualizando información del empleado, in: " + identifier);
             var employeeStored = this.context.Employees.FirstOrDefault(e => e.IN.Equals(identifier) && e.Enabled);
             if (employeeStored == null)
             {
