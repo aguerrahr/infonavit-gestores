@@ -99,7 +99,7 @@ namespace GestoresAPI.Controllers
                     NbTpDH = tpdh.Descripcion,
                     InUsuairoEnrola = dh.UsuarioEnrola,
                     InUsuairoModifica = dh.UsuarioModifica,
-                    NbUsuairoEnrola = (
+                    NbUsuairoEnrola = dh.UsuarioEnrola == "MOD-ENROLL" ? "MODULO DE ENROLAMIENTO" : (
                         from u in context.Employees
                         where (u.IN == dh.UsuarioEnrola)
                         select (u.Name + " " + u.LastName + " " + u.MiddleName)
