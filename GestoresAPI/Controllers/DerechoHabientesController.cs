@@ -66,6 +66,7 @@ namespace GestoresAPI.Controllers
                             where (u.IN == dh.UsuarioModifica)
                             select (u.Name + " " + u.LastName + " " + u.MiddleName)
                         ).FirstOrDefault().ToString(),
+                    EnrolamientoCertificado = dh.EnrolamientoCertificado,
                 }
 
             );
@@ -112,6 +113,7 @@ namespace GestoresAPI.Controllers
                             where (u.IN == dh.UsuarioModifica)
                             select (u.Name + " " + u.LastName + " " + u.MiddleName)
                         ).FirstOrDefault().ToString(),
+                    EnrolamientoCertificado = dh.EnrolamientoCertificado,
                 }
 
             );

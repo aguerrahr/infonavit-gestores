@@ -11,10 +11,10 @@ namespace GestoresAPI.DTO
      public class DerechoHabienteDTO
     {
         public DerechoHabienteDTO(DerechoHabiente derechoHabiente) =>
-          (Id, Nombre, APaterno, AMaterno, Nss, Curp, FhEnrolamiento, FhModificacion, UsuarioEnrola, UsuarioModifica, Activo, TipoDerechoHabiente) =
+          (Id, Nombre, APaterno, AMaterno, Nss, Curp, FhEnrolamiento, FhModificacion, UsuarioEnrola, UsuarioModifica, Activo, TipoDerechoHabiente, EnrolamientoCertificado) =
 (derechoHabiente.Id, derechoHabiente.Nombre, derechoHabiente.APaterno, derechoHabiente.AMaterno, derechoHabiente.Nss, derechoHabiente.Curp, 
             derechoHabiente.FhEnrolamiento, derechoHabiente.FhModificacion, derechoHabiente.UsuarioEnrola, derechoHabiente.UsuarioModifica, 
-            derechoHabiente.Activo, derechoHabiente.TipoDerechoHabiente);
+            derechoHabiente.Activo, derechoHabiente.TipoDerechoHabiente, derechoHabiente.EnrolamientoCertificado);
 
         [JsonConstructor]
         public DerechoHabienteDTO()
@@ -38,6 +38,7 @@ namespace GestoresAPI.DTO
         public String NbUsuairoModifica { get; set; }
         public String InUsuairoEnrola { get; set; }
         public String InUsuairoModifica { get; set; }
+        public Byte? EnrolamientoCertificado { get; set; }
     }    
 }
 

@@ -47,7 +47,10 @@ namespace GestoresAPI.Models
         public int? Activo { get; set; }
         [Column("TIPO_DERECHO_HABIENTE")]
         public int TipoDerechoHabiente { get; set; }
-    
+
+        [Column("enrolamiento_certificado")]
+        public Byte? EnrolamientoCertificado { get; set; }
+
         public virtual TipoDerechoHabiente TipoDerechoHabientes { get; set; }
 
     }
